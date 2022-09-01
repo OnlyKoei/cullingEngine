@@ -172,17 +172,17 @@ export class RenderScene {
             mainLight.update();
         }
 
-        const sphereLights = this._sphereLights;
-        for (let i = 0; i < sphereLights.length; i++) {
-            const light = sphereLights[i];
-            light.update();
-        }
+        // const sphereLights = this._sphereLights;
+        // for (let i = 0; i < sphereLights.length; i++) {
+        //     const light = sphereLights[i];
+        //     light.update();
+        // }
 
-        const spotLights = this._spotLights;
-        for (let i = 0; i < spotLights.length; i++) {
-            const light = spotLights[i];
-            light.update();
-        }
+        // const spotLights = this._spotLights;
+        // for (let i = 0; i < spotLights.length; i++) {
+        //     const light = spotLights[i];
+        //     light.update();
+        // }
 
         const models = this._models;
         for (let i = 0; i < models.length; i++) {
@@ -325,8 +325,8 @@ export class RenderScene {
      * @param sl The spot light.
      */
     public addSpotLight (sl: SpotLight) {
-        sl.attachToScene(this);
-        this._spotLights.push(sl);
+        // sl.attachToScene(this);
+        // this._spotLights.push(sl);
     }
 
     /**
@@ -335,14 +335,14 @@ export class RenderScene {
      * @param sl The spot light.
      */
     public removeSpotLight (sl: SpotLight) {
-        for (let i = 0; i < this._spotLights.length; ++i) {
-            if (this._spotLights[i] === sl) {
-                sl.detachFromScene();
-                this._spotLights.splice(i, 1);
+        // for (let i = 0; i < this._spotLights.length; ++i) {
+        //     if (this._spotLights[i] === sl) {
+        //         sl.detachFromScene();
+        //         this._spotLights.splice(i, 1);
 
-                return;
-            }
-        }
+        //         return;
+        //     }
+        // }
     }
 
     /**
@@ -350,10 +350,10 @@ export class RenderScene {
      * @zh 删除所有球面光源。
      */
     public removeSphereLights () {
-        for (let i = 0; i < this._sphereLights.length; ++i) {
-            this._sphereLights[i].detachFromScene();
-        }
-        this._sphereLights.length = 0;
+        // for (let i = 0; i < this._sphereLights.length; ++i) {
+        //     this._sphereLights[i].detachFromScene();
+        // }
+        // this._sphereLights.length = 0;
     }
 
     /**
@@ -361,10 +361,10 @@ export class RenderScene {
      * @zh 删除所有聚光灯光源。
      */
     public removeSpotLights () {
-        for (let i = 0; i < this._spotLights.length; ++i) {
-            this._spotLights[i].detachFromScene();
-        }
-        this._spotLights = [];
+        // for (let i = 0; i < this._spotLights.length; ++i) {
+        //     this._spotLights[i].detachFromScene();
+        // }
+        // this._spotLights = [];
     }
 
     /**

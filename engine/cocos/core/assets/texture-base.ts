@@ -50,8 +50,9 @@ export class TextureBase extends Asset {
      * @zh 此贴图是否为压缩的像素格式。
      */
     public get isCompressed (): boolean {
-        return (this._format >= PixelFormat.RGB_ETC1 && this._format <= PixelFormat.RGBA_ASTC_12x12)
-        || (this._format >= PixelFormat.RGB_A_PVRTC_2BPPV1 && this._format <= PixelFormat.RGBA_ETC1);
+        // return (this._format >= PixelFormat.RGB_ETC1 && this._format <= PixelFormat.RGBA_ASTC_12x12)
+        // || (this._format >= PixelFormat.RGB_A_PVRTC_2BPPV1 && this._format <= PixelFormat.RGBA_ETC1);
+        return this._format <= PixelFormat.RGBA_ASTC_12x12;
     }
 
     /**
@@ -325,13 +326,13 @@ export class TextureBase extends Asset {
     }
 
     protected _getGFXPixelFormat (format: PixelFormat) {
-        if (format === PixelFormat.RGBA_ETC1) {
-            format = PixelFormat.RGB_ETC1;
-        } else if (format === PixelFormat.RGB_A_PVRTC_4BPPV1) {
-            format = PixelFormat.RGB_PVRTC_4BPPV1;
-        } else if (format === PixelFormat.RGB_A_PVRTC_2BPPV1) {
-            format = PixelFormat.RGB_PVRTC_2BPPV1;
-        }
+        // if (format === PixelFormat.RGBA_ETC1) {
+        //     format = PixelFormat.RGB_ETC1;
+        // } else if (format === PixelFormat.RGB_A_PVRTC_4BPPV1) {
+        //     format = PixelFormat.RGB_PVRTC_4BPPV1;
+        // } else if (format === PixelFormat.RGB_A_PVRTC_2BPPV1) {
+        //     format = PixelFormat.RGB_PVRTC_2BPPV1;
+        // }
         return format as unknown as Format;
     }
 }

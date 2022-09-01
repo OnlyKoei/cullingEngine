@@ -666,10 +666,10 @@ export class Root {
                 l.scene.removeDirectionalLight(l as DirectionalLight);
                 break;
             case LightType.SPHERE:
-                l.scene.removeSphereLight(l as SphereLight);
+                // l.scene.removeSphereLight(l as SphereLight);
                 break;
             case LightType.SPOT:
-                l.scene.removeSpotLight(l as SpotLight);
+                // l.scene.removeSpotLight(l as SpotLight);
                 break;
             default:
                 break;
@@ -693,10 +693,10 @@ export class Root {
                     l.scene.removeDirectionalLight(l as DirectionalLight);
                     break;
                 case LightType.SPHERE:
-                    l.scene.removeSphereLight(l as SphereLight);
+                    // l.scene.removeSphereLight(l as SphereLight);
                     break;
                 case LightType.SPOT:
-                    l.scene.removeSpotLight(l as SpotLight);
+                    // l.scene.removeSpotLight(l as SpotLight);
                     break;
                 default:
                     break;

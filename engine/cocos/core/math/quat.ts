@@ -23,6 +23,7 @@
  THE SOFTWARE.
 */
 
+import { EDITOR } from 'internal:constants';
 import { CCClass } from '../data/class';
 import { ValueType } from '../value-types/value-type';
 import { Mat3 } from './mat3';
@@ -30,7 +31,6 @@ import { IQuatLike, IVec3Like } from './type-define';
 import { EPSILON, toDegree } from './utils';
 import { Vec3 } from './vec3';
 import { legacyCC } from '../global-exports';
-
 /**
  * @en quaternion
  * @zh 四元数
@@ -87,29 +87,32 @@ export class Quat extends ValueType {
      * @zh 设置四元数为两向量间的最短路径旋转，默认两向量都已归一化
      */
     public static rotationTo<Out extends IQuatLike, VecLike extends IVec3Like> (out: Out, a: VecLike, b: VecLike) {
-        const dot = Vec3.dot(a, b);
-        if (dot < -0.999999) {
-            Vec3.cross(v3_1, Vec3.UNIT_X, a);
-            if (v3_1.length() < 0.000001) {
-                Vec3.cross(v3_1, Vec3.UNIT_Y, a);
+        if (EDITOR) {
+            const dot = Vec3.dot(a, b);
+            if (dot < -0.999999) {
+                Vec3.cross(v3_1, Vec3.UNIT_X, a);
+                if (v3_1.length() < 0.000001) {
+                    Vec3.cross(v3_1, Vec3.UNIT_Y, a);
+                }
+                Vec3.normalize(v3_1, v3_1);
+                Quat.fromAxisAngle(out, v3_1, Math.PI);
+                return out;
+            } else if (dot > 0.999999) {
+                out.x = 0;
+                out.y = 0;
+                out.z = 0;
+                out.w = 1;
+                return out;
+            } else {
+                Vec3.cross(v3_1, a, b);
+                out.x = v3_1.x;
+                out.y = v3_1.y;
+                out.z = v3_1.z;
+                out.w = 1 + dot;
+                return Quat.normalize(out, out);
             }
-            Vec3.normalize(v3_1, v3_1);
-            Quat.fromAxisAngle(out, v3_1, Math.PI);
-            return out;
-        } else if (dot > 0.999999) {
-            out.x = 0;
-            out.y = 0;
-            out.z = 0;
-            out.w = 1;
-            return out;
-        } else {
-            Vec3.cross(v3_1, a, b);
-            out.x = v3_1.x;
-            out.y = v3_1.y;
-            out.z = v3_1.z;
-            out.w = 1 + dot;
-            return Quat.normalize(out, out);
         }
+        return out;
     }
 
     /**
@@ -156,10 +159,12 @@ export class Quat extends ValueType {
      * @zh 四元数标量乘法
      */
     public static multiplyScalar<Out extends IQuatLike> (out: Out, a: Out, b: number) {
-        out.x = a.x * b;
-        out.y = a.y * b;
-        out.z = a.z * b;
-        out.w = a.w * b;
+        if (EDITOR) {
+            out.x = a.x * b;
+            out.y = a.y * b;
+            out.z = a.z * b;
+            out.w = a.w * b;
+        }
         return out;
     }
 
@@ -168,10 +173,12 @@ export class Quat extends ValueType {
      * @zh 四元数乘加：A + B * scale
      */
     public static scaleAndAdd<Out extends IQuatLike> (out: Out, a: Out, b: Out, scale: number) {
-        out.x = a.x + b.x * scale;
-        out.y = a.y + b.y * scale;
-        out.z = a.z + b.z * scale;
-        out.w = a.w + b.w * scale;
+        if (EDITOR) {
+            out.x = a.x + b.x * scale;
+            out.y = a.y + b.y * scale;
+            out.z = a.z + b.z * scale;
+            out.w = a.w + b.w * scale;
+        }
         return out;
     }
 
@@ -181,16 +188,18 @@ export class Quat extends ValueType {
      * @param rad radius of rotation
      */
     public static rotateX<Out extends IQuatLike> (out: Out, a: Out, rad: number) {
-        rad *= 0.5;
+        if (EDITOR) {
+            rad *= 0.5;
 
-        const bx = Math.sin(rad);
-        const bw = Math.cos(rad);
-        const { x, y, z, w } = a;
+            const bx = Math.sin(rad);
+            const bw = Math.cos(rad);
+            const { x, y, z, w } = a;
 
-        out.x = x * bw + w * bx;
-        out.y = y * bw + z * bx;
-        out.z = z * bw - y * bx;
-        out.w = w * bw - x * bx;
+            out.x = x * bw + w * bx;
+            out.y = y * bw + z * bx;
+            out.z = z * bw - y * bx;
+            out.w = w * bw - x * bx;
+        }
         return out;
     }
 
@@ -200,16 +209,18 @@ export class Quat extends ValueType {
      * @param rad radius of rotation
      */
     public static rotateY<Out extends IQuatLike> (out: Out, a: Out, rad: number) {
-        rad *= 0.5;
+        if (EDITOR) {
+            rad *= 0.5;
 
-        const by = Math.sin(rad);
-        const bw = Math.cos(rad);
-        const { x, y, z, w } = a;
+            const by = Math.sin(rad);
+            const bw = Math.cos(rad);
+            const { x, y, z, w } = a;
 
-        out.x = x * bw - z * by;
-        out.y = y * bw + w * by;
-        out.z = z * bw + x * by;
-        out.w = w * bw - y * by;
+            out.x = x * bw - z * by;
+            out.y = y * bw + w * by;
+            out.z = z * bw + x * by;
+            out.w = w * bw - y * by;
+        }
         return out;
     }
 
@@ -219,16 +230,18 @@ export class Quat extends ValueType {
      * @param rad radius of rotation
      */
     public static rotateZ<Out extends IQuatLike> (out: Out, a: Out, rad: number) {
-        rad *= 0.5;
+        if (EDITOR) {
+            rad *= 0.5;
 
-        const bz = Math.sin(rad);
-        const bw = Math.cos(rad);
-        const { x, y, z, w } = a;
+            const bz = Math.sin(rad);
+            const bw = Math.cos(rad);
+            const { x, y, z, w } = a;
 
-        out.x = x * bw + y * bz;
-        out.y = y * bw - x * bz;
-        out.z = z * bw + w * bz;
-        out.w = w * bw - z * bz;
+            out.x = x * bw + y * bz;
+            out.y = y * bw - x * bz;
+            out.z = z * bw + w * bz;
+            out.w = w * bw - z * bz;
+        }
         return out;
     }
 
@@ -298,45 +311,46 @@ export class Quat extends ValueType {
      */
     public static slerp<Out extends IQuatLike, QuatLike_1 extends IQuatLike, QuatLike_2 extends IQuatLike>
     (out: Out, a: QuatLike_1, b: QuatLike_2, t: number) {
-        // benchmarks:
-        //    http://jsperf.com/quaternion-slerp-implementations
+        if (EDITOR) {
+            // benchmarks:
+            //    http://jsperf.com/quaternion-slerp-implementations
 
-        let scale0 = 0;
-        let scale1 = 0;
-        let bx = b.x;
-        let by = b.y;
-        let bz = b.z;
-        let bw = b.w;
+            let scale0 = 0;
+            let scale1 = 0;
+            let bx = b.x;
+            let by = b.y;
+            let bz = b.z;
+            let bw = b.w;
 
-        // calc cosine
-        let cosom = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
-        // adjust signs (if necessary)
-        if (cosom < 0.0) {
-            cosom = -cosom;
-            bx = -bx;
-            by = -by;
-            bz = -bz;
-            bw = -bw;
-        }
-        // calculate coefficients
-        if ((1.0 - cosom) > 0.000001) {
+            // calc cosine
+            let cosom = a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+            // adjust signs (if necessary)
+            if (cosom < 0.0) {
+                cosom = -cosom;
+                bx = -bx;
+                by = -by;
+                bz = -bz;
+                bw = -bw;
+            }
+            // calculate coefficients
+            if ((1.0 - cosom) > 0.000001) {
             // standard case (slerp)
-            const omega = Math.acos(cosom);
-            const sinom = Math.sin(omega);
-            scale0 = Math.sin((1.0 - t) * omega) / sinom;
-            scale1 = Math.sin(t * omega) / sinom;
-        } else {
+                const omega = Math.acos(cosom);
+                const sinom = Math.sin(omega);
+                scale0 = Math.sin((1.0 - t) * omega) / sinom;
+                scale1 = Math.sin(t * omega) / sinom;
+            } else {
             // "from" and "to" quaternions are very close
             //  ... so we can do a linear interpolation
-            scale0 = 1.0 - t;
-            scale1 = t;
+                scale0 = 1.0 - t;
+                scale1 = t;
+            }
+            // calculate final values
+            out.x = scale0 * a.x + scale1 * bx;
+            out.y = scale0 * a.y + scale1 * by;
+            out.z = scale0 * a.z + scale1 * bz;
+            out.w = scale0 * a.w + scale1 * bw;
         }
-        // calculate final values
-        out.x = scale0 * a.x + scale1 * bx;
-        out.y = scale0 * a.y + scale1 * by;
-        out.z = scale0 * a.z + scale1 * bz;
-        out.w = scale0 * a.w + scale1 * bw;
-
         return out;
     }
 

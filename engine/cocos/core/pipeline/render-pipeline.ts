@@ -25,6 +25,7 @@
 
 import { ccclass, displayOrder, serializable, type } from 'cc.decorator';
 import { systemInfo } from 'pal/system-info';
+import { EDITOR } from 'internal:constants';
 import { sceneCulling, validPunctualLightsCulling } from './scene-culling';
 import { Asset } from '../assets/asset';
 import { AccessFlagBit, Attribute, Buffer, BufferInfo, BufferUsageBit, ClearFlagBit, ClearFlags, ColorAttachment, CommandBuffer,
@@ -49,7 +50,6 @@ import { OS } from '../../../pal/system-info/enum-type';
 import { macro } from '../platform/macro';
 import { UBOSkinning } from './define';
 import { PipelineRuntime } from './custom/pipeline';
-
 /**
  * @en Render pipeline information descriptor
  * @zh 渲染管线描述信息。
@@ -545,50 +545,50 @@ export abstract class RenderPipeline extends Asset implements IPipelineEvent, Pi
 
     private _genQuadVertexData (surfaceTransform: SurfaceTransform, renderArea: Rect) : Float32Array {
         const vbData = new Float32Array(4 * 4);
-
-        const minX = renderArea.x / this._width;
-        const maxX = (renderArea.x + renderArea.width) / this._width;
-        let minY = renderArea.y / this._height;
-        let maxY = (renderArea.y + renderArea.height) / this._height;
-        if (this.device.capabilities.screenSpaceSignY > 0) {
-            const temp = maxY;
-            maxY       = minY;
-            minY       = temp;
+        if (EDITOR) {
+            const minX = renderArea.x / this._width;
+            const maxX = (renderArea.x + renderArea.width) / this._width;
+            let minY = renderArea.y / this._height;
+            let maxY = (renderArea.y + renderArea.height) / this._height;
+            if (this.device.capabilities.screenSpaceSignY > 0) {
+                const temp = maxY;
+                maxY       = minY;
+                minY       = temp;
+            }
+            let n = 0;
+            switch (surfaceTransform) {
+            case (SurfaceTransform.IDENTITY):
+                n = 0;
+                vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = maxY;
+                vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = maxY;
+                vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = minY;
+                vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = minY;
+                break;
+            case (SurfaceTransform.ROTATE_90):
+                n = 0;
+                vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = maxY;
+                vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = minY;
+                vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = maxY;
+                vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = minY;
+                break;
+            case (SurfaceTransform.ROTATE_180):
+                n = 0;
+                vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = minY;
+                vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = minY;
+                vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = maxY;
+                vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = maxY;
+                break;
+            case (SurfaceTransform.ROTATE_270):
+                n = 0;
+                vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = minY;
+                vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = maxY;
+                vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = minY;
+                vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = maxY;
+                break;
+            default:
+                break;
+            }
         }
-        let n = 0;
-        switch (surfaceTransform) {
-        case (SurfaceTransform.IDENTITY):
-            n = 0;
-            vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = maxY;
-            vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = maxY;
-            vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = minY;
-            vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = minY;
-            break;
-        case (SurfaceTransform.ROTATE_90):
-            n = 0;
-            vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = maxY;
-            vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = minY;
-            vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = maxY;
-            vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = minY;
-            break;
-        case (SurfaceTransform.ROTATE_180):
-            n = 0;
-            vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = minY;
-            vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = maxX; vbData[n++] = minY;
-            vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = minX; vbData[n++] = maxY;
-            vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = maxY;
-            break;
-        case (SurfaceTransform.ROTATE_270):
-            n = 0;
-            vbData[n++] = -1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = minY;
-            vbData[n++] = 1.0; vbData[n++] = -1.0; vbData[n++] = minX; vbData[n++] = maxY;
-            vbData[n++] = -1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = minY;
-            vbData[n++] = 1.0; vbData[n++] = 1.0; vbData[n++] = maxX; vbData[n++] = maxY;
-            break;
-        default:
-            break;
-        }
-
         return vbData;
     }
 
@@ -734,85 +734,87 @@ export abstract class RenderPipeline extends Asset implements IPipelineEvent, Pi
     }
 
     public generateBloomRenderData () {
-        if (this._pipelineRenderData!.bloom != null) return;
+        if (EDITOR) {
+            if (this._pipelineRenderData!.bloom != null) return;
 
-        const bloom = this._pipelineRenderData!.bloom = new BloomRenderData();
-        const device = this.device;
+            const bloom = this._pipelineRenderData!.bloom = new BloomRenderData();
+            const device = this.device;
 
-        // create renderPass
-        const colorAttachment = new ColorAttachment();
-        colorAttachment.format = Format.RGBA8;
-        colorAttachment.loadOp = LoadOp.CLEAR;
-        colorAttachment.storeOp = StoreOp.STORE;
-        colorAttachment.barrier = device.getGeneralBarrier(new GeneralBarrierInfo(
-            AccessFlagBit.NONE,
-            AccessFlagBit.COLOR_ATTACHMENT_WRITE,
-        ));
-        bloom.renderPass = device.createRenderPass(new RenderPassInfo([colorAttachment]));
+            // create renderPass
+            const colorAttachment = new ColorAttachment();
+            colorAttachment.format = Format.RGBA8;
+            colorAttachment.loadOp = LoadOp.CLEAR;
+            colorAttachment.storeOp = StoreOp.STORE;
+            colorAttachment.barrier = device.getGeneralBarrier(new GeneralBarrierInfo(
+                AccessFlagBit.NONE,
+                AccessFlagBit.COLOR_ATTACHMENT_WRITE,
+            ));
+            bloom.renderPass = device.createRenderPass(new RenderPassInfo([colorAttachment]));
 
-        let curWidth = this._width;
-        let curHeight = this._height;
+            let curWidth = this._width;
+            let curHeight = this._height;
 
-        // prefilter
-        bloom.prefiterTex = device.createTexture(new TextureInfo(
-            TextureType.TEX2D,
-            TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED,
-            Format.RGBA8,
-            curWidth >> 1,
-            curHeight >> 1,
-        ));
-        bloom.prefilterFramebuffer = device.createFramebuffer(new FramebufferInfo(
-            bloom.renderPass,
-            [bloom.prefiterTex],
-        ));
-
-        // downsample & upsample
-        curWidth >>= 1;
-        curHeight >>= 1;
-        for (let i = 0; i < MAX_BLOOM_FILTER_PASS_NUM; ++i) {
-            bloom.downsampleTexs.push(device.createTexture(new TextureInfo(
+            // prefilter
+            bloom.prefiterTex = device.createTexture(new TextureInfo(
                 TextureType.TEX2D,
                 TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED,
                 Format.RGBA8,
                 curWidth >> 1,
                 curHeight >> 1,
-            )));
-            bloom.downsampleFramebuffers[i] = device.createFramebuffer(new FramebufferInfo(
+            ));
+            bloom.prefilterFramebuffer = device.createFramebuffer(new FramebufferInfo(
                 bloom.renderPass,
-                [bloom.downsampleTexs[i]],
+                [bloom.prefiterTex],
             ));
 
-            bloom.upsampleTexs.push(device.createTexture(new TextureInfo(
+            // downsample & upsample
+            curWidth >>= 1;
+            curHeight >>= 1;
+            for (let i = 0; i < MAX_BLOOM_FILTER_PASS_NUM; ++i) {
+                bloom.downsampleTexs.push(device.createTexture(new TextureInfo(
+                    TextureType.TEX2D,
+                    TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED,
+                    Format.RGBA8,
+                    curWidth >> 1,
+                    curHeight >> 1,
+                )));
+                bloom.downsampleFramebuffers[i] = device.createFramebuffer(new FramebufferInfo(
+                    bloom.renderPass,
+                    [bloom.downsampleTexs[i]],
+                ));
+
+                bloom.upsampleTexs.push(device.createTexture(new TextureInfo(
+                    TextureType.TEX2D,
+                    TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED,
+                    Format.RGBA8,
+                    curWidth,
+                    curHeight,
+                )));
+                bloom.upsampleFramebuffers[i] = device.createFramebuffer(new FramebufferInfo(
+                    bloom.renderPass,
+                    [bloom.upsampleTexs[i]],
+                ));
+
+                curWidth >>= 1;
+                curHeight >>= 1;
+            }
+
+            // combine
+            bloom.combineTex = device.createTexture(new TextureInfo(
                 TextureType.TEX2D,
                 TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED,
                 Format.RGBA8,
-                curWidth,
-                curHeight,
-            )));
-            bloom.upsampleFramebuffers[i] = device.createFramebuffer(new FramebufferInfo(
+                this._width,
+                this._height,
+            ));
+            bloom.combineFramebuffer = device.createFramebuffer(new FramebufferInfo(
                 bloom.renderPass,
-                [bloom.upsampleTexs[i]],
+                [bloom.combineTex],
             ));
 
-            curWidth >>= 1;
-            curHeight >>= 1;
+            // sampler
+            bloom.sampler = this.globalDSManager.linearSampler;
         }
-
-        // combine
-        bloom.combineTex = device.createTexture(new TextureInfo(
-            TextureType.TEX2D,
-            TextureUsageBit.COLOR_ATTACHMENT | TextureUsageBit.SAMPLED,
-            Format.RGBA8,
-            this._width,
-            this._height,
-        ));
-        bloom.combineFramebuffer = device.createFramebuffer(new FramebufferInfo(
-            bloom.renderPass,
-            [bloom.combineTex],
-        ));
-
-        // sampler
-        bloom.sampler = this.globalDSManager.linearSampler;
     }
 
     /**

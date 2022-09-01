@@ -23,7 +23,7 @@
  THE SOFTWARE.
  */
 
-import { DEBUG } from 'internal:constants';
+import { DEBUG, EDITOR } from 'internal:constants';
 import { Material } from '../../assets/material';
 import { Sphere } from '../../geometry';
 import { Color, Mat4, Vec3, Vec2 } from '../../math';
@@ -407,18 +407,20 @@ export class Shadows {
     }
 
     protected _updatePlanarInfo () {
-        if (!this._material) {
-            this._material = new Material();
-            this._material.initialize({ effectName: 'pipeline/planar-shadow' });
+        if (EDITOR) {
+            if (!this._material) {
+                this._material = new Material();
+                this._material.initialize({ effectName: 'pipeline/planar-shadow' });
+            }
+            if (!this._instancingMaterial) {
+                this._instancingMaterial = new Material();
+                this._instancingMaterial.initialize({ effectName: 'pipeline/planar-shadow', defines: { USE_INSTANCING: true } });
+            }
+            const root = legacyCC.director.root;
+            const pipeline = root.pipeline;
+            pipeline.macros.CC_SHADOW_TYPE = 1;
+            root.onGlobalPipelineStateChanged();
         }
-        if (!this._instancingMaterial) {
-            this._instancingMaterial = new Material();
-            this._instancingMaterial.initialize({ effectName: 'pipeline/planar-shadow', defines: { USE_INSTANCING: true } });
-        }
-        const root = legacyCC.director.root;
-        const pipeline = root.pipeline;
-        pipeline.macros.CC_SHADOW_TYPE = 1;
-        root.onGlobalPipelineStateChanged();
     }
 
     public destroy () {

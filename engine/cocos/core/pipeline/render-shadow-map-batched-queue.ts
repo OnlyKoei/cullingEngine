@@ -98,19 +98,19 @@ export class RenderShadowMapBatchedQueue {
                 break;
             case LightType.SPOT:
                 // eslint-disable-next-line no-case-declarations
-                const spotLight = light as SpotLight;
-                if (spotLight.shadowEnabled) {
-                    const castShadowObjects = sceneData.csmLayers.castShadowObjects;
-                    for (let i = 0; i < castShadowObjects.length; i++) {
-                        const ro = castShadowObjects[i];
-                        const model = ro.model;
-                        if (model.worldBounds) {
-                            if (!intersect.aabbFrustum(model.worldBounds, spotLight.frustum)) { continue; }
-                        }
+                // const spotLight = light as SpotLight;
+                // if (spotLight.shadowEnabled) {
+                //     const castShadowObjects = sceneData.csmLayers.castShadowObjects;
+                //     for (let i = 0; i < castShadowObjects.length; i++) {
+                //         const ro = castShadowObjects[i];
+                //         const model = ro.model;
+                //         if (model.worldBounds) {
+                //             if (!intersect.aabbFrustum(model.worldBounds, spotLight.frustum)) { continue; }
+                //         }
 
-                        this.add(model);
-                    }
-                }
+                //         this.add(model);
+                //     }
+                // }
                 break;
             default:
             }

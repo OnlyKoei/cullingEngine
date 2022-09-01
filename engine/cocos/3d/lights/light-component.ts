@@ -282,10 +282,10 @@ export class Light extends Component {
                 renderScene.setMainLight(this._light as scene.DirectionalLight);
                 break;
             case scene.LightType.SPHERE:
-                renderScene.addSphereLight(this._light as scene.SphereLight);
+                // renderScene.addSphereLight(this._light as scene.SphereLight);
                 break;
             case scene.LightType.SPOT:
-                renderScene.addSpotLight(this._light as scene.SpotLight);
+                // renderScene.addSpotLight(this._light as scene.SpotLight);
                 break;
             default:
                 break;
@@ -302,10 +302,10 @@ export class Light extends Component {
                 renderScene.unsetMainLight(this._light as scene.DirectionalLight);
                 break;
             case scene.LightType.SPHERE:
-                renderScene.removeSphereLight(this._light as scene.SphereLight);
+                // renderScene.removeSphereLight(this._light as scene.SphereLight);
                 break;
             case scene.LightType.SPOT:
-                renderScene.removeSpotLight(this._light as scene.SpotLight);
+                // renderScene.removeSpotLight(this._light as scene.SpotLight);
                 break;
             default:
                 break;

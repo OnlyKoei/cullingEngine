@@ -94,94 +94,94 @@ export class LightingStage extends RenderStage {
         return true;
     }
     public gatherLights (camera: Camera) {
-        const pipeline = this._pipeline as DeferredPipeline;
-        const cmdBuff = pipeline.commandBuffers[0];
+        // const pipeline = this._pipeline as DeferredPipeline;
+        // const cmdBuff = pipeline.commandBuffers[0];
 
-        const sphereLights = camera.scene!.sphereLights;
-        const spotLights = camera.scene!.spotLights;
-        const _sphere = Sphere.create(0, 0, 0, 1);
-        const _vec4Array = new Float32Array(4);
-        const exposure = camera.exposure;
+        // const sphereLights = camera.scene!.sphereLights;
+        // const spotLights = camera.scene!.spotLights;
+        // const _sphere = Sphere.create(0, 0, 0, 1);
+        // const _vec4Array = new Float32Array(4);
+        // const exposure = camera.exposure;
 
-        let idx = 0;
-        const elementLen = Vec4.length; // sizeof(vec4) / sizeof(float32)
-        const fieldLen = elementLen * this._maxDeferredLights;
+        // let idx = 0;
+        // const elementLen = Vec4.length; // sizeof(vec4) / sizeof(float32)
+        // const fieldLen = elementLen * this._maxDeferredLights;
 
-        for (let i = 0; i < sphereLights.length && idx < this._maxDeferredLights; i++, ++idx) {
-            const light = sphereLights[i];
-            Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
-            if (intersect.sphereFrustum(_sphere, camera.frustum)) {
-                // cc_lightPos
-                Vec3.toArray(_vec4Array, light.position);
-                _vec4Array[3] = 0;
-                this._lightBufferData.set(_vec4Array, idx * elementLen);
+        // for (let i = 0; i < sphereLights.length && idx < this._maxDeferredLights; i++, ++idx) {
+        //     const light = sphereLights[i];
+        //     Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
+        //     if (intersect.sphereFrustum(_sphere, camera.frustum)) {
+        //         // cc_lightPos
+        //         Vec3.toArray(_vec4Array, light.position);
+        //         _vec4Array[3] = 0;
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen);
 
-                // cc_lightColor
-                Vec3.toArray(_vec4Array, light.color);
-                if (light.useColorTemperature) {
-                    const tempRGB = light.colorTemperatureRGB;
-                    _vec4Array[0] *= tempRGB.x;
-                    _vec4Array[1] *= tempRGB.y;
-                    _vec4Array[2] *= tempRGB.z;
-                }
+        //         // cc_lightColor
+        //         Vec3.toArray(_vec4Array, light.color);
+        //         if (light.useColorTemperature) {
+        //             const tempRGB = light.colorTemperatureRGB;
+        //             _vec4Array[0] *= tempRGB.x;
+        //             _vec4Array[1] *= tempRGB.y;
+        //             _vec4Array[2] *= tempRGB.z;
+        //         }
 
-                if (pipeline.pipelineSceneData.isHDR) {
-                    _vec4Array[3] = light.luminance * exposure * this._lightMeterScale;
-                } else {
-                    _vec4Array[3] = light.luminance;
-                }
+        //         if (pipeline.pipelineSceneData.isHDR) {
+        //             _vec4Array[3] = light.luminance * exposure * this._lightMeterScale;
+        //         } else {
+        //             _vec4Array[3] = light.luminance;
+        //         }
 
-                this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 1);
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 1);
 
-                // cc_lightSizeRangeAngle
-                _vec4Array[0] = light.size;
-                _vec4Array[1] = light.range;
-                _vec4Array[2] = 0.0;
-                this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 2);
-            }
-        }
+        //         // cc_lightSizeRangeAngle
+        //         _vec4Array[0] = light.size;
+        //         _vec4Array[1] = light.range;
+        //         _vec4Array[2] = 0.0;
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 2);
+        //     }
+        // }
 
-        for (let i = 0; i < spotLights.length && idx < this._maxDeferredLights; i++, ++idx) {
-            const light = spotLights[i];
-            Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
-            if (intersect.sphereFrustum(_sphere, camera.frustum)) {
-                // cc_lightPos
-                Vec3.toArray(_vec4Array, light.position);
-                _vec4Array[3] = 1;
-                this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 0);
+        // for (let i = 0; i < spotLights.length && idx < this._maxDeferredLights; i++, ++idx) {
+        //     const light = spotLights[i];
+        //     Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
+        //     if (intersect.sphereFrustum(_sphere, camera.frustum)) {
+        //         // cc_lightPos
+        //         Vec3.toArray(_vec4Array, light.position);
+        //         _vec4Array[3] = 1;
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 0);
 
-                // cc_lightColor
-                Vec3.toArray(_vec4Array, light.color);
-                if (light.useColorTemperature) {
-                    const tempRGB = light.colorTemperatureRGB;
-                    _vec4Array[0] *= tempRGB.x;
-                    _vec4Array[1] *= tempRGB.y;
-                    _vec4Array[2] *= tempRGB.z;
-                }
-                if (pipeline.pipelineSceneData.isHDR) {
-                    _vec4Array[3] = light.luminance * exposure * this._lightMeterScale;
-                } else {
-                    _vec4Array[3] = light.luminance;
-                }
-                this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 1);
+        //         // cc_lightColor
+        //         Vec3.toArray(_vec4Array, light.color);
+        //         if (light.useColorTemperature) {
+        //             const tempRGB = light.colorTemperatureRGB;
+        //             _vec4Array[0] *= tempRGB.x;
+        //             _vec4Array[1] *= tempRGB.y;
+        //             _vec4Array[2] *= tempRGB.z;
+        //         }
+        //         if (pipeline.pipelineSceneData.isHDR) {
+        //             _vec4Array[3] = light.luminance * exposure * this._lightMeterScale;
+        //         } else {
+        //             _vec4Array[3] = light.luminance;
+        //         }
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 1);
 
-                // cc_lightSizeRangeAngle
-                _vec4Array[0] = light.size;
-                _vec4Array[1] = light.range;
-                _vec4Array[2] = light.spotAngle;
-                this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 2);
+        //         // cc_lightSizeRangeAngle
+        //         _vec4Array[0] = light.size;
+        //         _vec4Array[1] = light.range;
+        //         _vec4Array[2] = light.spotAngle;
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 2);
 
-                // cc_lightDir
-                Vec3.toArray(_vec4Array, light.direction);
-                this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 3);
-            }
-        }
+        //         // cc_lightDir
+        //         Vec3.toArray(_vec4Array, light.direction);
+        //         this._lightBufferData.set(_vec4Array, idx * elementLen + fieldLen * 3);
+        //     }
+        // }
 
-        // the count of lights is set to cc_lightDir[0].w
-        const offset = fieldLen * 3 + 3;
-        this._lightBufferData.set([idx], offset);
+        // // the count of lights is set to cc_lightDir[0].w
+        // const offset = fieldLen * 3 + 3;
+        // this._lightBufferData.set([idx], offset);
 
-        cmdBuff.updateBuffer(this._deferredLitsBufs, this._lightBufferData);
+        // cmdBuff.updateBuffer(this._deferredLitsBufs, this._lightBufferData);
     }
 
     protected _createStageDescriptor (pass: Pass) {

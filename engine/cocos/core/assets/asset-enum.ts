@@ -113,12 +113,12 @@ export enum PixelFormat {
      * @en A pixel format containing red, green, and blue channels that is PVR 2bpp compressed.
      * @zh 包含 RGB 通道的 PVR 2BPP 压缩纹理格式
      */
-    RGB_PVRTC_2BPPV1 = Format.PVRTC_RGB2,
+    // RGB_PVRTC_2BPPV1 = Format.PVRTC_RGB2,
     /**
      * @en A pixel format containing red, green, blue, and alpha channels that is PVR 2bpp compressed.
      * @zh 包含 RGBA 通道的 PVR 2BPP 压缩纹理格式
      */
-    RGBA_PVRTC_2BPPV1 = Format.PVRTC_RGBA2,
+    // RGBA_PVRTC_2BPPV1 = Format.PVRTC_RGBA2,
     /**
      * @en A pixel format containing red, green, blue, and alpha channels that is PVR 2bpp compressed.
      * RGB_A_PVRTC_2BPPV1 texture is a 2x height RGB_PVRTC_2BPPV1 format texture.
@@ -131,12 +131,12 @@ export enum PixelFormat {
      * @en A pixel format containing red, green, and blue channels that is PVR 4bpp compressed.
      * @zh 包含 RGB 通道的 PVR 4BPP 压缩纹理格式
      */
-    RGB_PVRTC_4BPPV1 = Format.PVRTC_RGB4,
+    // RGB_PVRTC_4BPPV1 = Format.PVRTC_RGB4,
     /**
      * @en A pixel format containing red, green, blue and alpha channels that is PVR 4bpp compressed.
      * @zh 包含 RGBA 通道的 PVR 4BPP 压缩纹理格式
      */
-    RGBA_PVRTC_4BPPV1 = Format.PVRTC_RGBA4,
+    // RGBA_PVRTC_4BPPV1 = Format.PVRTC_RGBA4,
     /**
      * @en A pixel format containing red, green, blue, and alpha channels that is PVR 4bpp compressed.
      * RGB_A_PVRTC_4BPPV1 texture is a 2x height RGB_PVRTC_4BPPV1 format texture.
@@ -149,22 +149,22 @@ export enum PixelFormat {
      * @en A pixel format containing red, green, and blue channels that is ETC1 compressed.
      * @zh 包含 RGB 通道的 ETC1 压缩纹理格式
      */
-    RGB_ETC1 = Format.ETC_RGB8,
+    // RGB_ETC1 = Format.ETC_RGB8,
     /**
      * @en A pixel format containing red, green, blue, and alpha channels that is ETC1 compressed.
      * @zh 包含 RGBA 通道的 ETC1 压缩纹理格式
      */
-    RGBA_ETC1 = CUSTOM_PIXEL_FORMAT + 2,
+    // RGBA_ETC1 = CUSTOM_PIXEL_FORMAT + 2,
     /**
      * @en A pixel format containing red, green, and blue channels that is ETC2 compressed.
      * @zh 包含 RGB 通道的 ETC2 压缩纹理格式
      */
-    RGB_ETC2 = Format.ETC2_RGB8,
+    // RGB_ETC2 = Format.ETC2_RGB8,
     /**
      * @en A pixel format containing red, green, blue, and alpha channels that is ETC2 compressed.
      * @zh 包含 RGBA 通道的 ETC2 压缩纹理格式
      */
-    RGBA_ETC2 = Format.ETC2_RGBA8,
+    // RGBA_ETC2 = Format.ETC2_RGBA8,
 
     /**
      * @en A pixel format containing red, green, blue, and alpha channels that is ASTC compressed with 4x4 block size.

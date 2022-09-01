@@ -98,37 +98,37 @@ export function GFXFormatToWebGLType (format: Format, gl: WebGLRenderingContext)
     case Format.DEPTH: return gl.UNSIGNED_INT;
     case Format.DEPTH_STENCIL: return WebGLEXT.UNSIGNED_INT_24_8_WEBGL;
 
-    case Format.BC1: return gl.UNSIGNED_BYTE;
-    case Format.BC1_SRGB: return gl.UNSIGNED_BYTE;
-    case Format.BC2: return gl.UNSIGNED_BYTE;
-    case Format.BC2_SRGB: return gl.UNSIGNED_BYTE;
-    case Format.BC3: return gl.UNSIGNED_BYTE;
-    case Format.BC3_SRGB: return gl.UNSIGNED_BYTE;
-    case Format.BC4: return gl.UNSIGNED_BYTE;
-    case Format.BC4_SNORM: return gl.BYTE;
-    case Format.BC5: return gl.UNSIGNED_BYTE;
-    case Format.BC5_SNORM: return gl.BYTE;
-    case Format.BC6H_SF16: return gl.FLOAT;
-    case Format.BC6H_UF16: return gl.FLOAT;
-    case Format.BC7: return gl.UNSIGNED_BYTE;
-    case Format.BC7_SRGB: return gl.UNSIGNED_BYTE;
+        // case Format.BC1: return gl.UNSIGNED_BYTE;
+        // case Format.BC1_SRGB: return gl.UNSIGNED_BYTE;
+        // case Format.BC2: return gl.UNSIGNED_BYTE;
+        // case Format.BC2_SRGB: return gl.UNSIGNED_BYTE;
+        // case Format.BC3: return gl.UNSIGNED_BYTE;
+        // case Format.BC3_SRGB: return gl.UNSIGNED_BYTE;
+        // case Format.BC4: return gl.UNSIGNED_BYTE;
+        // case Format.BC4_SNORM: return gl.BYTE;
+        // case Format.BC5: return gl.UNSIGNED_BYTE;
+        // case Format.BC5_SNORM: return gl.BYTE;
+        // case Format.BC6H_SF16: return gl.FLOAT;
+        // case Format.BC6H_UF16: return gl.FLOAT;
+        // case Format.BC7: return gl.UNSIGNED_BYTE;
+        // case Format.BC7_SRGB: return gl.UNSIGNED_BYTE;
 
-    case Format.ETC_RGB8: return gl.UNSIGNED_BYTE;
-    case Format.ETC2_RGB8: return gl.UNSIGNED_BYTE;
-    case Format.ETC2_SRGB8: return gl.UNSIGNED_BYTE;
-    case Format.ETC2_RGB8_A1: return gl.UNSIGNED_BYTE;
-    case Format.ETC2_SRGB8_A1: return gl.UNSIGNED_BYTE;
-    case Format.EAC_R11: return gl.UNSIGNED_BYTE;
-    case Format.EAC_R11SN: return gl.BYTE;
-    case Format.EAC_RG11: return gl.UNSIGNED_BYTE;
-    case Format.EAC_RG11SN: return gl.BYTE;
+        // case Format.ETC_RGB8: return gl.UNSIGNED_BYTE;
+        // case Format.ETC2_RGB8: return gl.UNSIGNED_BYTE;
+        // case Format.ETC2_SRGB8: return gl.UNSIGNED_BYTE;
+        // case Format.ETC2_RGB8_A1: return gl.UNSIGNED_BYTE;
+        // case Format.ETC2_SRGB8_A1: return gl.UNSIGNED_BYTE;
+        // case Format.EAC_R11: return gl.UNSIGNED_BYTE;
+        // case Format.EAC_R11SN: return gl.BYTE;
+        // case Format.EAC_RG11: return gl.UNSIGNED_BYTE;
+        // case Format.EAC_RG11SN: return gl.BYTE;
 
-    case Format.PVRTC_RGB2: return gl.UNSIGNED_BYTE;
-    case Format.PVRTC_RGBA2: return gl.UNSIGNED_BYTE;
-    case Format.PVRTC_RGB4: return gl.UNSIGNED_BYTE;
-    case Format.PVRTC_RGBA4: return gl.UNSIGNED_BYTE;
-    case Format.PVRTC2_2BPP: return gl.UNSIGNED_BYTE;
-    case Format.PVRTC2_4BPP: return gl.UNSIGNED_BYTE;
+        // case Format.PVRTC_RGB2: return gl.UNSIGNED_BYTE;
+        // case Format.PVRTC_RGBA2: return gl.UNSIGNED_BYTE;
+        // case Format.PVRTC_RGB4: return gl.UNSIGNED_BYTE;
+        // case Format.PVRTC_RGBA4: return gl.UNSIGNED_BYTE;
+        // case Format.PVRTC2_2BPP: return gl.UNSIGNED_BYTE;
+        // case Format.PVRTC2_4BPP: return gl.UNSIGNED_BYTE;
 
     case Format.ASTC_RGBA_4X4:
     case Format.ASTC_RGBA_5X4:
@@ -203,31 +203,31 @@ export function GFXFormatToWebGLFormat (format: Format, gl: WebGLRenderingContex
     case Format.DEPTH: return gl.DEPTH_COMPONENT;
     case Format.DEPTH_STENCIL: return gl.DEPTH_STENCIL;
 
-    case Format.BC1: return WebGLEXT.COMPRESSED_RGB_S3TC_DXT1_EXT;
-    case Format.BC1_ALPHA: return WebGLEXT.COMPRESSED_RGBA_S3TC_DXT1_EXT;
-    case Format.BC1_SRGB: return WebGLEXT.COMPRESSED_SRGB_S3TC_DXT1_EXT;
-    case Format.BC1_SRGB_ALPHA: return WebGLEXT.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT;
-    case Format.BC2: return WebGLEXT.COMPRESSED_RGBA_S3TC_DXT3_EXT;
-    case Format.BC2_SRGB: return WebGLEXT.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT;
-    case Format.BC3: return WebGLEXT.COMPRESSED_RGBA_S3TC_DXT5_EXT;
-    case Format.BC3_SRGB: return WebGLEXT.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT;
+        // case Format.BC1: return WebGLEXT.COMPRESSED_RGB_S3TC_DXT1_EXT;
+        // case Format.BC1_ALPHA: return WebGLEXT.COMPRESSED_RGBA_S3TC_DXT1_EXT;
+        // case Format.BC1_SRGB: return WebGLEXT.COMPRESSED_SRGB_S3TC_DXT1_EXT;
+        // case Format.BC1_SRGB_ALPHA: return WebGLEXT.COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT;
+        // case Format.BC2: return WebGLEXT.COMPRESSED_RGBA_S3TC_DXT3_EXT;
+        // case Format.BC2_SRGB: return WebGLEXT.COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT;
+        // case Format.BC3: return WebGLEXT.COMPRESSED_RGBA_S3TC_DXT5_EXT;
+        // case Format.BC3_SRGB: return WebGLEXT.COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT;
 
-    case Format.ETC_RGB8: return WebGLEXT.COMPRESSED_RGB_ETC1_WEBGL;
-    case Format.ETC2_RGB8: return WebGLEXT.COMPRESSED_RGB8_ETC2;
-    case Format.ETC2_SRGB8: return WebGLEXT.COMPRESSED_SRGB8_ETC2;
-    case Format.ETC2_RGB8_A1: return WebGLEXT.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2;
-    case Format.ETC2_SRGB8_A1: return WebGLEXT.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2;
-    case Format.ETC2_RGBA8: return WebGLEXT.COMPRESSED_RGBA8_ETC2_EAC;
-    case Format.ETC2_SRGB8_A8: return WebGLEXT.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC;
-    case Format.EAC_R11: return WebGLEXT.COMPRESSED_R11_EAC;
-    case Format.EAC_R11SN: return WebGLEXT.COMPRESSED_SIGNED_R11_EAC;
-    case Format.EAC_RG11: return WebGLEXT.COMPRESSED_RG11_EAC;
-    case Format.EAC_RG11SN: return WebGLEXT.COMPRESSED_SIGNED_RG11_EAC;
+        // case Format.ETC_RGB8: return WebGLEXT.COMPRESSED_RGB_ETC1_WEBGL;
+        // case Format.ETC2_RGB8: return WebGLEXT.COMPRESSED_RGB8_ETC2;
+        // case Format.ETC2_SRGB8: return WebGLEXT.COMPRESSED_SRGB8_ETC2;
+        // case Format.ETC2_RGB8_A1: return WebGLEXT.COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2;
+        // case Format.ETC2_SRGB8_A1: return WebGLEXT.COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2;
+        // case Format.ETC2_RGBA8: return WebGLEXT.COMPRESSED_RGBA8_ETC2_EAC;
+        // case Format.ETC2_SRGB8_A8: return WebGLEXT.COMPRESSED_SRGB8_ALPHA8_ETC2_EAC;
+        // case Format.EAC_R11: return WebGLEXT.COMPRESSED_R11_EAC;
+        // case Format.EAC_R11SN: return WebGLEXT.COMPRESSED_SIGNED_R11_EAC;
+        // case Format.EAC_RG11: return WebGLEXT.COMPRESSED_RG11_EAC;
+        // case Format.EAC_RG11SN: return WebGLEXT.COMPRESSED_SIGNED_RG11_EAC;
 
-    case Format.PVRTC_RGB2: return WebGLEXT.COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-    case Format.PVRTC_RGBA2: return WebGLEXT.COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-    case Format.PVRTC_RGB4: return WebGLEXT.COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-    case Format.PVRTC_RGBA4: return WebGLEXT.COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+        // case Format.PVRTC_RGB2: return WebGLEXT.COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+        // case Format.PVRTC_RGBA2: return WebGLEXT.COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+        // case Format.PVRTC_RGB4: return WebGLEXT.COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+        // case Format.PVRTC_RGBA4: return WebGLEXT.COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
 
     case Format.ASTC_RGBA_4X4: return WebGLEXT.COMPRESSED_RGBA_ASTC_4x4_KHR;
     case Format.ASTC_RGBA_5X4: return WebGLEXT.COMPRESSED_RGBA_ASTC_5x4_KHR;

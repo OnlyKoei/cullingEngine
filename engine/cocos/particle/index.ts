@@ -32,6 +32,8 @@ import { legacyCC } from '../core/global-exports';
 import GradientRange from './animator/gradient-range';
 import Gradient, { AlphaKey, ColorKey } from './animator/gradient';
 import Burst from './burst';
+import { MotionStreak } from '../particle-2d/motion-streak-2d';
+import { MotionStreakAssemblerManager } from '../particle-2d/motion-streak-2d-assembler';
 
 export {
     Billboard,
@@ -44,6 +46,8 @@ export {
     AlphaKey,
     ColorKey,
     Burst,
+    MotionStreak,
+    MotionStreakAssemblerManager,
 };
 
 export * from './deprecated';

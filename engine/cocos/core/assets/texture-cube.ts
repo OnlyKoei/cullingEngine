@@ -174,52 +174,54 @@ export class TextureCube extends SimpleTexture {
      * and the value contains the atlas of the 6 faces and the layout information of each mipmap layer.
      */
     set mipmapAtlas (value: ITextureCubeMipmapAtlas | null) {
-        this._mipmapAtlas = value;
-        if (!this._mipmapAtlas) {
-            this.reset({
-                width: 0,
-                height: 0,
-                mipmapLevel: 0,
-            });
-            return;
-        }
-        const imageAtlasAsset: ImageAsset = this._mipmapAtlas.atlas.front;
-        if (!imageAtlasAsset.data) {
-            return;
-        }
-        const faceAtlas = this._mipmapAtlas.atlas;
-        const layout = this._mipmapAtlas.layout;
-        const mip0Layout = layout[0];
-
-        const ctx = Object.assign(document.createElement('canvas'), {
-            width: imageAtlasAsset.width,
-            height: imageAtlasAsset.height,
-        }).getContext('2d');
-
-        this.reset({
-            width: mip0Layout.width,
-            height: mip0Layout.height,
-            format: imageAtlasAsset.format,
-            mipmapLevel: layout.length,
-        });
-
-        for (let j = 0; j < layout.length; j++) {
-            const layoutInfo = layout[j];
-            _forEachFace(faceAtlas, (face, faceIndex) => {
-                ctx!.clearRect(0, 0, imageAtlasAsset.width, imageAtlasAsset.height);
-                const drawImg = face.data as HTMLImageElement;
-                ctx!.drawImage(drawImg, 0, 0);
-                const rawData = ctx!.getImageData(layoutInfo.left, layoutInfo.top, layoutInfo.width, layoutInfo.height);
-
-                const bufferAsset = new ImageAsset({
-                    _data: rawData.data,
-                    _compressed: face.isCompressed,
-                    width: rawData.width,
-                    height: rawData.height,
-                    format: face.format,
+        if (EDITOR) {
+            this._mipmapAtlas = value;
+            if (!this._mipmapAtlas) {
+                this.reset({
+                    width: 0,
+                    height: 0,
+                    mipmapLevel: 0,
                 });
-                this._assignImage(bufferAsset, layoutInfo.level, faceIndex);
+                return;
+            }
+            const imageAtlasAsset: ImageAsset = this._mipmapAtlas.atlas.front;
+            if (!imageAtlasAsset.data) {
+                return;
+            }
+            const faceAtlas = this._mipmapAtlas.atlas;
+            const layout = this._mipmapAtlas.layout;
+            const mip0Layout = layout[0];
+
+            const ctx = Object.assign(document.createElement('canvas'), {
+                width: imageAtlasAsset.width,
+                height: imageAtlasAsset.height,
+            }).getContext('2d');
+
+            this.reset({
+                width: mip0Layout.width,
+                height: mip0Layout.height,
+                format: imageAtlasAsset.format,
+                mipmapLevel: layout.length,
             });
+
+            for (let j = 0; j < layout.length; j++) {
+                const layoutInfo = layout[j];
+                _forEachFace(faceAtlas, (face, faceIndex) => {
+                    ctx!.clearRect(0, 0, imageAtlasAsset.width, imageAtlasAsset.height);
+                    const drawImg = face.data as HTMLImageElement;
+                    ctx!.drawImage(drawImg, 0, 0);
+                    const rawData = ctx!.getImageData(layoutInfo.left, layoutInfo.top, layoutInfo.width, layoutInfo.height);
+
+                    const bufferAsset = new ImageAsset({
+                        _data: rawData.data,
+                        _compressed: face.isCompressed,
+                        width: rawData.width,
+                        height: rawData.height,
+                        format: face.format,
+                    });
+                    this._assignImage(bufferAsset, layoutInfo.level, faceIndex);
+                });
+            }
         }
     }
 
@@ -272,21 +274,23 @@ export class TextureCube extends SimpleTexture {
      */
 
     public static fromTexture2DArray (textures: Texture2D[], out?: TextureCube) {
-        const mipmaps: ITextureCubeMipmap[] = [];
-        const nMipmaps = textures.length / 6;
-        for (let i = 0; i < nMipmaps; i++) {
-            const x = i * 6;
-            mipmaps.push({
-                front: textures[x + FaceIndex.front].image!,
-                back: textures[x + FaceIndex.back].image!,
-                left: textures[x + FaceIndex.left].image!,
-                right: textures[x + FaceIndex.right].image!,
-                top: textures[x + FaceIndex.top].image!,
-                bottom: textures[x + FaceIndex.bottom].image!,
-            });
+        if (EDITOR) {
+            const mipmaps: ITextureCubeMipmap[] = [];
+            const nMipmaps = textures.length / 6;
+            for (let i = 0; i < nMipmaps; i++) {
+                const x = i * 6;
+                mipmaps.push({
+                    front: textures[x + FaceIndex.front].image!,
+                    back: textures[x + FaceIndex.back].image!,
+                    left: textures[x + FaceIndex.left].image!,
+                    right: textures[x + FaceIndex.right].image!,
+                    top: textures[x + FaceIndex.top].image!,
+                    bottom: textures[x + FaceIndex.bottom].image!,
+                });
+            }
+            out = out || new TextureCube();
+            out.mipmaps = mipmaps;
         }
-        out = out || new TextureCube();
-        out.mipmaps = mipmaps;
         return out;
     }
 
@@ -324,20 +328,22 @@ export class TextureCube extends SimpleTexture {
     }
 
     public updateMipmaps (firstLevel = 0, count?: number) {
-        if (firstLevel >= this._mipmaps.length) {
-            return;
-        }
+        if (EDITOR) {
+            if (firstLevel >= this._mipmaps.length) {
+                return;
+            }
 
-        const nUpdate = Math.min(
-            count === undefined ? this._mipmaps.length : count,
-            this._mipmaps.length - firstLevel,
-        );
+            const nUpdate = Math.min(
+                count === undefined ? this._mipmaps.length : count,
+                this._mipmaps.length - firstLevel,
+            );
 
-        for (let i = 0; i < nUpdate; ++i) {
-            const level = firstLevel + i;
-            _forEachFace(this._mipmaps[level], (face, faceIndex) => {
-                this._assignImage(face, level, faceIndex);
-            });
+            for (let i = 0; i < nUpdate; ++i) {
+                const level = firstLevel + i;
+                _forEachFace(this._mipmaps[level], (face, faceIndex) => {
+                    this._assignImage(face, level, faceIndex);
+                });
+            }
         }
     }
 
@@ -424,37 +430,19 @@ export class TextureCube extends SimpleTexture {
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
     public _deserialize (serializedData: ITextureCubeSerializeData, handle: any) {
-        const data = serializedData;
-        super._deserialize(data.base, handle);
-        this.isRGBE = data.rgbe;
-        this._mipmapMode = data.mipmapMode;
-        if (this._mipmapMode === MipmapMode.BAKED_CONVOLUTION_MAP) {
-            const mipmapAtlas = data.mipmapAtlas;
-            const mipmapLayout = data.mipmapLayout;
-            this._mipmapAtlas = {
-                atlas: {} as ITextureCubeMipmap,
-                layout: mipmapLayout,
-            };
-            this._mipmapAtlas.atlas = {
-                front: new ImageAsset(),
-                back: new ImageAsset(),
-                left: new ImageAsset(),
-                right: new ImageAsset(),
-                top: new ImageAsset(),
-                bottom: new ImageAsset(),
-            };
-            const imageAssetClassId = js.getClassId(ImageAsset);
-            handle.result.push(this._mipmapAtlas.atlas, `front`, mipmapAtlas.front, imageAssetClassId);
-            handle.result.push(this._mipmapAtlas.atlas, `back`, mipmapAtlas.back, imageAssetClassId);
-            handle.result.push(this._mipmapAtlas.atlas, `left`, mipmapAtlas.left, imageAssetClassId);
-            handle.result.push(this._mipmapAtlas.atlas, `right`, mipmapAtlas.right, imageAssetClassId);
-            handle.result.push(this._mipmapAtlas.atlas, `top`, mipmapAtlas.top, imageAssetClassId);
-            handle.result.push(this._mipmapAtlas.atlas, `bottom`, mipmapAtlas.bottom, imageAssetClassId);
-        } else {
-            this._mipmaps = new Array(data.mipmaps.length);
-            for (let i = 0; i < data.mipmaps.length; ++i) {
-                // Prevent resource load failed
-                this._mipmaps[i] = {
+        if (EDITOR) {
+            const data = serializedData;
+            super._deserialize(data.base, handle);
+            this.isRGBE = data.rgbe;
+            this._mipmapMode = data.mipmapMode;
+            if (this._mipmapMode === MipmapMode.BAKED_CONVOLUTION_MAP) {
+                const mipmapAtlas = data.mipmapAtlas;
+                const mipmapLayout = data.mipmapLayout;
+                this._mipmapAtlas = {
+                    atlas: {} as ITextureCubeMipmap,
+                    layout: mipmapLayout,
+                };
+                this._mipmapAtlas.atlas = {
                     front: new ImageAsset(),
                     back: new ImageAsset(),
                     left: new ImageAsset(),
@@ -462,14 +450,34 @@ export class TextureCube extends SimpleTexture {
                     top: new ImageAsset(),
                     bottom: new ImageAsset(),
                 };
-                const mipmap = data.mipmaps[i];
                 const imageAssetClassId = js.getClassId(ImageAsset);
-                handle.result.push(this._mipmaps[i], `front`, mipmap.front, imageAssetClassId);
-                handle.result.push(this._mipmaps[i], `back`, mipmap.back, imageAssetClassId);
-                handle.result.push(this._mipmaps[i], `left`, mipmap.left, imageAssetClassId);
-                handle.result.push(this._mipmaps[i], `right`, mipmap.right, imageAssetClassId);
-                handle.result.push(this._mipmaps[i], `top`, mipmap.top, imageAssetClassId);
-                handle.result.push(this._mipmaps[i], `bottom`, mipmap.bottom, imageAssetClassId);
+                handle.result.push(this._mipmapAtlas.atlas, `front`, mipmapAtlas.front, imageAssetClassId);
+                handle.result.push(this._mipmapAtlas.atlas, `back`, mipmapAtlas.back, imageAssetClassId);
+                handle.result.push(this._mipmapAtlas.atlas, `left`, mipmapAtlas.left, imageAssetClassId);
+                handle.result.push(this._mipmapAtlas.atlas, `right`, mipmapAtlas.right, imageAssetClassId);
+                handle.result.push(this._mipmapAtlas.atlas, `top`, mipmapAtlas.top, imageAssetClassId);
+                handle.result.push(this._mipmapAtlas.atlas, `bottom`, mipmapAtlas.bottom, imageAssetClassId);
+            } else {
+                this._mipmaps = new Array(data.mipmaps.length);
+                for (let i = 0; i < data.mipmaps.length; ++i) {
+                // Prevent resource load failed
+                    this._mipmaps[i] = {
+                        front: new ImageAsset(),
+                        back: new ImageAsset(),
+                        left: new ImageAsset(),
+                        right: new ImageAsset(),
+                        top: new ImageAsset(),
+                        bottom: new ImageAsset(),
+                    };
+                    const mipmap = data.mipmaps[i];
+                    const imageAssetClassId = js.getClassId(ImageAsset);
+                    handle.result.push(this._mipmaps[i], `front`, mipmap.front, imageAssetClassId);
+                    handle.result.push(this._mipmaps[i], `back`, mipmap.back, imageAssetClassId);
+                    handle.result.push(this._mipmaps[i], `left`, mipmap.left, imageAssetClassId);
+                    handle.result.push(this._mipmaps[i], `right`, mipmap.right, imageAssetClassId);
+                    handle.result.push(this._mipmaps[i], `top`, mipmap.top, imageAssetClassId);
+                    handle.result.push(this._mipmaps[i], `bottom`, mipmap.bottom, imageAssetClassId);
+                }
             }
         }
     }

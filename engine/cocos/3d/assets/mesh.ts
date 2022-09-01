@@ -682,43 +682,43 @@ export class Mesh extends Asset {
      * @param skeleton @en skeleton data @zh 骨骼信息
      */
     public getBoneSpaceBounds (skeleton: Skeleton) {
-        if (this._boneSpaceBounds.has(skeleton.hash)) {
-            return this._boneSpaceBounds.get(skeleton.hash)!;
-        }
-        const bounds: (AABB | null)[] = [];
-        this._boneSpaceBounds.set(skeleton.hash, bounds);
-        const valid: boolean[] = [];
-        const { bindposes } = skeleton;
-        for (let i = 0; i < bindposes.length; i++) {
-            bounds.push(new AABB(Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity));
-            valid.push(false);
-        }
-        const { primitives } = this._struct;
-        for (let p = 0; p < primitives.length; p++) {
-            const joints = this.readAttribute(p, AttributeName.ATTR_JOINTS);
-            const weights = this.readAttribute(p, AttributeName.ATTR_WEIGHTS);
-            const positions = this.readAttribute(p, AttributeName.ATTR_POSITION);
-            if (!joints || !weights || !positions) { continue; }
-            const vertCount = Math.min(joints.length / 4, weights.length / 4, positions.length / 3);
-            for (let i = 0; i < vertCount; i++) {
-                Vec3.set(v3_1, positions[3 * i + 0], positions[3 * i + 1], positions[3 * i + 2]);
-                for (let j = 0; j < 4; ++j) {
-                    const idx = 4 * i + j;
-                    const joint = joints[idx];
-                    if (weights[idx] === 0 || joint >= bindposes.length) { continue; }
-                    Vec3.transformMat4(v3_2, v3_1, bindposes[joint]);
-                    valid[joint] = true;
-                    const b = bounds[joint]!;
-                    Vec3.min(b.center, b.center, v3_2);
-                    Vec3.max(b.halfExtents, b.halfExtents, v3_2);
-                }
-            }
-        }
-        for (let i = 0; i < bindposes.length; i++) {
-            const b = bounds[i]!;
-            if (!valid[i]) { bounds[i] = null; } else { AABB.fromPoints(b, b.center, b.halfExtents); }
-        }
-        return bounds;
+        // if (this._boneSpaceBounds.has(skeleton.hash)) {
+        //     return this._boneSpaceBounds.get(skeleton.hash)!;
+        // }
+        // const bounds: (AABB | null)[] = [];
+        // this._boneSpaceBounds.set(skeleton.hash, bounds);
+        // const valid: boolean[] = [];
+        // const { bindposes } = skeleton;
+        // for (let i = 0; i < bindposes.length; i++) {
+        //     bounds.push(new AABB(Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity));
+        //     valid.push(false);
+        // }
+        // const { primitives } = this._struct;
+        // for (let p = 0; p < primitives.length; p++) {
+        //     const joints = this.readAttribute(p, AttributeName.ATTR_JOINTS);
+        //     const weights = this.readAttribute(p, AttributeName.ATTR_WEIGHTS);
+        //     const positions = this.readAttribute(p, AttributeName.ATTR_POSITION);
+        //     if (!joints || !weights || !positions) { continue; }
+        //     const vertCount = Math.min(joints.length / 4, weights.length / 4, positions.length / 3);
+        //     for (let i = 0; i < vertCount; i++) {
+        //         Vec3.set(v3_1, positions[3 * i + 0], positions[3 * i + 1], positions[3 * i + 2]);
+        //         for (let j = 0; j < 4; ++j) {
+        //             const idx = 4 * i + j;
+        //             const joint = joints[idx];
+        //             if (weights[idx] === 0 || joint >= bindposes.length) { continue; }
+        //             Vec3.transformMat4(v3_2, v3_1, bindposes[joint]);
+        //             valid[joint] = true;
+        //             const b = bounds[joint]!;
+        //             Vec3.min(b.center, b.center, v3_2);
+        //             Vec3.max(b.halfExtents, b.halfExtents, v3_2);
+        //         }
+        //     }
+        // }
+        // for (let i = 0; i < bindposes.length; i++) {
+        //     const b = bounds[i]!;
+        //     if (!valid[i]) { bounds[i] = null; } else { AABB.fromPoints(b, b.center, b.halfExtents); }
+        // }
+        // return bounds;
     }
 
     /**

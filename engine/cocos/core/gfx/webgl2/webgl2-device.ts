@@ -183,21 +183,21 @@ export class WebGL2Device extends Device {
 
         let compressedFormat = '';
 
-        if (this.getFormatFeatures(Format.ETC_RGB8)) {
-            compressedFormat += 'etc1 ';
-        }
+        // if (this.getFormatFeatures(Format.ETC_RGB8)) {
+        //     compressedFormat += 'etc1 ';
+        // }
 
-        if (this.getFormatFeatures(Format.ETC2_RGB8)) {
-            compressedFormat += 'etc2 ';
-        }
+        // if (this.getFormatFeatures(Format.ETC2_RGB8)) {
+        //     compressedFormat += 'etc2 ';
+        // }
 
-        if (this.getFormatFeatures(Format.BC1)) {
-            compressedFormat += 'dxt ';
-        }
+        // if (this.getFormatFeatures(Format.BC1)) {
+        //     compressedFormat += 'dxt ';
+        // }
 
-        if (this.getFormatFeatures(Format.PVRTC_RGB2)) {
-            compressedFormat += 'pvrtc ';
-        }
+        // if (this.getFormatFeatures(Format.PVRTC_RGB2)) {
+        //     compressedFormat += 'pvrtc ';
+        // }
 
         if (this.getFormatFeatures(Format.ASTC_RGBA_4X4)) {
             compressedFormat += 'astc ';
@@ -400,36 +400,36 @@ export class WebGL2Device extends Device {
 
         const compressedFeature: FormatFeature = FormatFeatureBit.SAMPLED_TEXTURE | FormatFeatureBit.LINEAR_FILTER;
 
-        if (exts.WEBGL_compressed_texture_etc1) {
-            this._formatFeatures[Format.ETC_RGB8] = compressedFeature;
-        }
+        // if (exts.WEBGL_compressed_texture_etc1) {
+        //     this._formatFeatures[Format.ETC_RGB8] = compressedFeature;
+        // }
 
-        if (exts.WEBGL_compressed_texture_etc) {
-            this._formatFeatures[Format.ETC2_RGB8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_RGBA8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_SRGB8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_SRGB8_A8] = compressedFeature;
-            this._formatFeatures[Format.ETC2_RGB8_A1] = compressedFeature;
-            this._formatFeatures[Format.ETC2_SRGB8_A1] = compressedFeature;
-        }
+        // if (exts.WEBGL_compressed_texture_etc) {
+        //     this._formatFeatures[Format.ETC2_RGB8] = compressedFeature;
+        //     this._formatFeatures[Format.ETC2_RGBA8] = compressedFeature;
+        //     this._formatFeatures[Format.ETC2_SRGB8] = compressedFeature;
+        //     this._formatFeatures[Format.ETC2_SRGB8_A8] = compressedFeature;
+        //     this._formatFeatures[Format.ETC2_RGB8_A1] = compressedFeature;
+        //     this._formatFeatures[Format.ETC2_SRGB8_A1] = compressedFeature;
+        // }
 
-        if (exts.WEBGL_compressed_texture_s3tc) {
-            this._formatFeatures[Format.BC1] = compressedFeature;
-            this._formatFeatures[Format.BC1_ALPHA] = compressedFeature;
-            this._formatFeatures[Format.BC1_SRGB] = compressedFeature;
-            this._formatFeatures[Format.BC1_SRGB_ALPHA] = compressedFeature;
-            this._formatFeatures[Format.BC2] = compressedFeature;
-            this._formatFeatures[Format.BC2_SRGB] = compressedFeature;
-            this._formatFeatures[Format.BC3] = compressedFeature;
-            this._formatFeatures[Format.BC3_SRGB] = compressedFeature;
-        }
+        // if (exts.WEBGL_compressed_texture_s3tc) {
+        //     this._formatFeatures[Format.BC1] = compressedFeature;
+        //     this._formatFeatures[Format.BC1_ALPHA] = compressedFeature;
+        //     this._formatFeatures[Format.BC1_SRGB] = compressedFeature;
+        //     this._formatFeatures[Format.BC1_SRGB_ALPHA] = compressedFeature;
+        //     this._formatFeatures[Format.BC2] = compressedFeature;
+        //     this._formatFeatures[Format.BC2_SRGB] = compressedFeature;
+        //     this._formatFeatures[Format.BC3] = compressedFeature;
+        //     this._formatFeatures[Format.BC3_SRGB] = compressedFeature;
+        // }
 
-        if (exts.WEBGL_compressed_texture_pvrtc) {
-            this._formatFeatures[Format.PVRTC_RGB2] = compressedFeature;
-            this._formatFeatures[Format.PVRTC_RGBA2] = compressedFeature;
-            this._formatFeatures[Format.PVRTC_RGB4] = compressedFeature;
-            this._formatFeatures[Format.PVRTC_RGBA4] = compressedFeature;
-        }
+        // if (exts.WEBGL_compressed_texture_pvrtc) {
+        //     this._formatFeatures[Format.PVRTC_RGB2] = compressedFeature;
+        //     this._formatFeatures[Format.PVRTC_RGBA2] = compressedFeature;
+        //     this._formatFeatures[Format.PVRTC_RGB4] = compressedFeature;
+        //     this._formatFeatures[Format.PVRTC_RGBA4] = compressedFeature;
+        // }
 
         if (exts.WEBGL_compressed_texture_astc) {
             this._formatFeatures[Format.ASTC_RGBA_4X4] = compressedFeature;

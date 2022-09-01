@@ -106,32 +106,32 @@ export class UIStaticBatch extends UIRenderer {
      * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
      */
     public _requireDrawBatch () {
-        const batch = new DrawBatch2D();
-        batch.isStatic = true;
-        this._uiDrawBatchList.push(batch);
-        return batch;
+        // const batch = new DrawBatch2D();
+        // batch.isStatic = true;
+        // this._uiDrawBatchList.push(batch);
+        // return batch;
     }
 
     protected _clearData () {
-        if (this._bufferAccessor) {
-            this._bufferAccessor.reset();
+        // if (this._bufferAccessor) {
+        //     this._bufferAccessor.reset();
 
-            const ui = this._getBatcher()!;
-            for (let i = 0; i < this._uiDrawBatchList.length; i++) {
-                const element = this._uiDrawBatchList[i];
-                element.destroy(ui);
-            }
-        }
+        //     const ui = this._getBatcher()!;
+        //     for (let i = 0; i < this._uiDrawBatchList.length; i++) {
+        //         const element = this._uiDrawBatchList[i];
+        //         element.destroy(ui);
+        //     }
+        // }
 
-        this._uiDrawBatchList.length = 0;
-        this._init = false;
+        // this._uiDrawBatchList.length = 0;
+        // this._init = false;
     }
 
     protected _getBatcher () {
-        if (director.root && director.root.batcher2D) {
-            return director.root.batcher2D;
-        }
-        warnID(9301);
-        return null;
+        // if (director.root && director.root.batcher2D) {
+        //     return director.root.batcher2D;
+        // }
+        // warnID(9301);
+        // return null;
     }
 }

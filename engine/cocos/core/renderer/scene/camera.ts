@@ -892,32 +892,34 @@ export class Camera {
      * @returns the resulting ray
      */
     public screenPointToRay (out: Ray, x: number, y: number): Ray {
-        if (!this._node) return null!;
+        if (EDITOR) {
+            if (!this._node) return null!;
 
-        const width = this.width;
-        const height = this.height;
-        const cx = this._orientedViewport.x * width;
-        const cy = this._orientedViewport.y * height;
-        const cw = this._orientedViewport.width * width;
-        const ch = this._orientedViewport.height * height;
-        const isProj = this._proj === CameraProjection.PERSPECTIVE;
-        const ySign = this._device.capabilities.clipSpaceSignY;
-        const preTransform = preTransforms[this._curTransform];
+            const width = this.width;
+            const height = this.height;
+            const cx = this._orientedViewport.x * width;
+            const cy = this._orientedViewport.y * height;
+            const cw = this._orientedViewport.width * width;
+            const ch = this._orientedViewport.height * height;
+            const isProj = this._proj === CameraProjection.PERSPECTIVE;
+            const ySign = this._device.capabilities.clipSpaceSignY;
+            const preTransform = preTransforms[this._curTransform];
 
-        Vec3.set(v_a, (x - cx) / cw * 2 - 1, (y - cy) / ch * 2 - 1, isProj ? 1 : -1);
+            Vec3.set(v_a, (x - cx) / cw * 2 - 1, (y - cy) / ch * 2 - 1, isProj ? 1 : -1);
 
-        const { x: ox, y: oy } = v_a;
-        v_a.x = ox * preTransform[0] + oy * preTransform[2] * ySign;
-        v_a.y = ox * preTransform[1] + oy * preTransform[3] * ySign;
+            const { x: ox, y: oy } = v_a;
+            v_a.x = ox * preTransform[0] + oy * preTransform[2] * ySign;
+            v_a.y = ox * preTransform[1] + oy * preTransform[3] * ySign;
 
-        Vec3.transformMat4(isProj ? v_a : out.o, v_a, this._matViewProjInv);
+            Vec3.transformMat4(isProj ? v_a : out.o, v_a, this._matViewProjInv);
 
-        if (isProj) {
+            if (isProj) {
             // camera origin
-            this._node.getWorldPosition(v_b);
-            Ray.fromPoints(out, v_b, v_a);
-        } else {
-            Vec3.transformQuat(out.d, Vec3.FORWARD, this._node.worldRotation);
+                this._node.getWorldPosition(v_b);
+                Ray.fromPoints(out, v_b, v_a);
+            } else {
+                Vec3.transformQuat(out.d, Vec3.FORWARD, this._node.worldRotation);
+            }
         }
 
         return out;
@@ -981,25 +983,27 @@ export class Camera {
      * @returns the resulting vector
      */
     public worldToScreen (out: Vec3, worldPos: Vec3 | Readonly<Vec3>): Vec3 {
-        const ySign = this._device.capabilities.clipSpaceSignY;
-        const preTransform = preTransforms[this._curTransform];
+        if (EDITOR) {
+            const ySign = this._device.capabilities.clipSpaceSignY;
+            const preTransform = preTransforms[this._curTransform];
 
-        Vec3.transformMat4(out, worldPos, this._matViewProj);
+            Vec3.transformMat4(out, worldPos, this._matViewProj);
 
-        const { x, y } = out;
-        out.x = x * preTransform[0] + y * preTransform[2] * ySign;
-        out.y = x * preTransform[1] + y * preTransform[3] * ySign;
+            const { x, y } = out;
+            out.x = x * preTransform[0] + y * preTransform[2] * ySign;
+            out.y = x * preTransform[1] + y * preTransform[3] * ySign;
 
-        const width = this.width;
-        const height = this.height;
-        const cx = this._orientedViewport.x * width;
-        const cy = this._orientedViewport.y * height;
-        const cw = this._orientedViewport.width * width;
-        const ch = this._orientedViewport.height * height;
+            const width = this.width;
+            const height = this.height;
+            const cx = this._orientedViewport.x * width;
+            const cy = this._orientedViewport.y * height;
+            const cw = this._orientedViewport.width * width;
+            const ch = this._orientedViewport.height * height;
 
-        out.x = cx + (out.x + 1) * 0.5 * cw;
-        out.y = cy + (out.y + 1) * 0.5 * ch;
-        out.z = out.z * 0.5 + 0.5;
+            out.x = cx + (out.x + 1) * 0.5 * cw;
+            out.y = cy + (out.y + 1) * 0.5 * ch;
+            out.z = out.z * 0.5 + 0.5;
+        }
 
         return out;
     }
@@ -1014,16 +1018,18 @@ export class Camera {
      * @returns the resulting matrix
      */
     public worldMatrixToScreen (out: Mat4, worldMatrix: Mat4, width: number, height: number) {
-        Mat4.multiply(out, this._matViewProj, worldMatrix);
-        Mat4.multiply(out, correctionMatrices[this._curTransform], out);
+        if (EDITOR) {
+            Mat4.multiply(out, this._matViewProj, worldMatrix);
+            Mat4.multiply(out, correctionMatrices[this._curTransform], out);
 
-        const halfWidth = width / 2;
-        const halfHeight = height / 2;
-        Mat4.identity(_tempMat1);
-        Mat4.transform(_tempMat1, _tempMat1, Vec3.set(v_a, halfWidth, halfHeight, 0));
-        Mat4.scale(_tempMat1, _tempMat1, Vec3.set(v_a, halfWidth, halfHeight, 1));
+            const halfWidth = width / 2;
+            const halfHeight = height / 2;
+            Mat4.identity(_tempMat1);
+            Mat4.transform(_tempMat1, _tempMat1, Vec3.set(v_a, halfWidth, halfHeight, 0));
+            Mat4.scale(_tempMat1, _tempMat1, Vec3.set(v_a, halfWidth, halfHeight, 1));
 
-        Mat4.multiply(out, _tempMat1, out);
+            Mat4.multiply(out, _tempMat1, out);
+        }
 
         return out;
     }

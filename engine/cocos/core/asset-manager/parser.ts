@@ -37,29 +37,29 @@ import { CCON } from '../data/ccon';
 
 // PVR constants //
 // https://github.com/toji/texture-tester/blob/master/js/webgl-texture-util.js#L424
-const PVR_HEADER_LENGTH = 13; // The header length in 32 bit ints.
-const PVR_MAGIC = 0x03525650; // 0x50565203;
+// const PVR_HEADER_LENGTH = 13; // The header length in 32 bit ints.
+// const PVR_MAGIC = 0x03525650; // 0x50565203;
 
 // Offsets into the header array.
-const PVR_HEADER_MAGIC = 0;
-const PVR_HEADER_FORMAT = 2;
-const PVR_HEADER_HEIGHT = 6;
-const PVR_HEADER_WIDTH = 7;
-const PVR_HEADER_MIPMAPCOUNT = 11;
-const PVR_HEADER_METADATA = 12;
+// const PVR_HEADER_MAGIC = 0;
+// const PVR_HEADER_FORMAT = 2;
+// const PVR_HEADER_HEIGHT = 6;
+// const PVR_HEADER_WIDTH = 7;
+// const PVR_HEADER_MIPMAPCOUNT = 11;
+// const PVR_HEADER_METADATA = 12;
 
 // ETC constants //
-const ETC_PKM_HEADER_SIZE = 16;
+// const ETC_PKM_HEADER_SIZE = 16;
 
-const ETC_PKM_FORMAT_OFFSET = 6;
-const ETC_PKM_ENCODED_WIDTH_OFFSET = 8;
-const ETC_PKM_ENCODED_HEIGHT_OFFSET = 10;
-const ETC_PKM_WIDTH_OFFSET = 12;
-const ETC_PKM_HEIGHT_OFFSET = 14;
+// const ETC_PKM_FORMAT_OFFSET = 6;
+// const ETC_PKM_ENCODED_WIDTH_OFFSET = 8;
+// const ETC_PKM_ENCODED_HEIGHT_OFFSET = 10;
+// const ETC_PKM_WIDTH_OFFSET = 12;
+// const ETC_PKM_HEIGHT_OFFSET = 14;
 
-const ETC1_RGB_NO_MIPMAPS = 0;
-const ETC2_RGB_NO_MIPMAPS = 1;
-const ETC2_RGBA_NO_MIPMAPS = 3;
+// const ETC1_RGB_NO_MIPMAPS = 0;
+// const ETC2_RGB_NO_MIPMAPS = 1;
+// const ETC2_RGBA_NO_MIPMAPS = 3;
 
 //= ==============//
 // ASTC constants //
@@ -173,78 +173,78 @@ export class Parser {
     }
 
     public parsePVRTex (file: ArrayBuffer | ArrayBufferView, options: IDownloadParseOptions, onComplete: CompleteCallback<IMemoryImageSource>) {
-        let err: Error | null = null;
-        let out: IMemoryImageSource | null = null;
-        try {
-            const buffer = file instanceof ArrayBuffer ? file : file.buffer;
-            // Get a view of the arrayBuffer that represents the DDS header.
-            const header = new Int32Array(buffer, 0, PVR_HEADER_LENGTH);
+        // let err: Error | null = null;
+        // let out: IMemoryImageSource | null = null;
+        // try {
+        //     const buffer = file instanceof ArrayBuffer ? file : file.buffer;
+        //     // Get a view of the arrayBuffer that represents the DDS header.
+        //     const header = new Int32Array(buffer, 0, PVR_HEADER_LENGTH);
 
-            // Do some sanity checks to make sure this is a valid DDS file.
-            if (header[PVR_HEADER_MAGIC] === PVR_MAGIC) {
-                // Gather other basic metrics and a view of the raw the DXT data.
-                const width = header[PVR_HEADER_WIDTH];
-                const height = header[PVR_HEADER_HEIGHT];
-                const dataOffset = header[PVR_HEADER_METADATA] + 52;
-                // todo: use new Uint8Array(buffer, dataOffset) instead
-                // buffer = buffer.slice(dataOffset, buffer.byteLength);
-                const pvrtcData = new Uint8Array(buffer, dataOffset);
-                out = {
-                    _data: pvrtcData,
-                    _compressed: true,
-                    width,
-                    height,
-                    format: 0,
-                };
-            } else if (header[11] === 0x21525650) {
-                const headerLength = header[0];
-                const height = header[1];
-                const width = header[2];
-                // todo: use new Uint8Array(buffer, headerLength) instead
-                // buffer = buffer.slice(headerLength, buffer.byteLength);
-                const pvrtcData = new Uint8Array(buffer, headerLength);
-                out = {
-                    _data: pvrtcData,
-                    _compressed: true,
-                    width,
-                    height,
-                    format: 0,
-                };
-            } else {
-                throw new Error('Invalid magic number in PVR header');
-            }
-        } catch (e) {
-            err = e as Error;
-        }
-        onComplete(err, out);
+        //     // Do some sanity checks to make sure this is a valid DDS file.
+        //     if (header[PVR_HEADER_MAGIC] === PVR_MAGIC) {
+        //         // Gather other basic metrics and a view of the raw the DXT data.
+        //         const width = header[PVR_HEADER_WIDTH];
+        //         const height = header[PVR_HEADER_HEIGHT];
+        //         const dataOffset = header[PVR_HEADER_METADATA] + 52;
+        //         // todo: use new Uint8Array(buffer, dataOffset) instead
+        //         // buffer = buffer.slice(dataOffset, buffer.byteLength);
+        //         const pvrtcData = new Uint8Array(buffer, dataOffset);
+        //         out = {
+        //             _data: pvrtcData,
+        //             _compressed: true,
+        //             width,
+        //             height,
+        //             format: 0,
+        //         };
+        //     } else if (header[11] === 0x21525650) {
+        //         const headerLength = header[0];
+        //         const height = header[1];
+        //         const width = header[2];
+        //         // todo: use new Uint8Array(buffer, headerLength) instead
+        //         // buffer = buffer.slice(headerLength, buffer.byteLength);
+        //         const pvrtcData = new Uint8Array(buffer, headerLength);
+        //         out = {
+        //             _data: pvrtcData,
+        //             _compressed: true,
+        //             width,
+        //             height,
+        //             format: 0,
+        //         };
+        //     } else {
+        //         throw new Error('Invalid magic number in PVR header');
+        //     }
+        // } catch (e) {
+        //     err = e as Error;
+        // }
+        // onComplete(err, out);
     }
 
     public parsePKMTex (file: ArrayBuffer | ArrayBufferView, options: IDownloadParseOptions, onComplete: CompleteCallback<IMemoryImageSource>) {
-        let err: Error | null = null;
-        let out: IMemoryImageSource | null = null;
-        try {
-            const buffer = file instanceof ArrayBuffer ? file : file.buffer;
-            const header = new Uint8Array(buffer);
-            const format = readBEUint16(header, ETC_PKM_FORMAT_OFFSET);
-            if (format !== ETC1_RGB_NO_MIPMAPS && format !== ETC2_RGB_NO_MIPMAPS && format !== ETC2_RGBA_NO_MIPMAPS) {
-                throw new Error('Invalid magic number in ETC header');
-            }
-            const width = readBEUint16(header, ETC_PKM_WIDTH_OFFSET);
-            const height = readBEUint16(header, ETC_PKM_HEIGHT_OFFSET);
-            const encodedWidth = readBEUint16(header, ETC_PKM_ENCODED_WIDTH_OFFSET);
-            const encodedHeight = readBEUint16(header, ETC_PKM_ENCODED_HEIGHT_OFFSET);
-            const etcData = new Uint8Array(buffer, ETC_PKM_HEADER_SIZE);
-            out = {
-                _data: etcData,
-                _compressed: true,
-                width,
-                height,
-                format: 0,
-            };
-        } catch (e) {
-            err = e as Error;
-        }
-        onComplete(err, out);
+        // let err: Error | null = null;
+        // let out: IMemoryImageSource | null = null;
+        // try {
+        //     const buffer = file instanceof ArrayBuffer ? file : file.buffer;
+        //     const header = new Uint8Array(buffer);
+        //     const format = readBEUint16(header, ETC_PKM_FORMAT_OFFSET);
+        //     if (format !== ETC1_RGB_NO_MIPMAPS && format !== ETC2_RGB_NO_MIPMAPS && format !== ETC2_RGBA_NO_MIPMAPS) {
+        //         throw new Error('Invalid magic number in ETC header');
+        //     }
+        //     const width = readBEUint16(header, ETC_PKM_WIDTH_OFFSET);
+        //     const height = readBEUint16(header, ETC_PKM_HEIGHT_OFFSET);
+        //     const encodedWidth = readBEUint16(header, ETC_PKM_ENCODED_WIDTH_OFFSET);
+        //     const encodedHeight = readBEUint16(header, ETC_PKM_ENCODED_HEIGHT_OFFSET);
+        //     const etcData = new Uint8Array(buffer, ETC_PKM_HEADER_SIZE);
+        //     out = {
+        //         _data: etcData,
+        //         _compressed: true,
+        //         width,
+        //         height,
+        //         format: 0,
+        //     };
+        // } catch (e) {
+        //     err = e as Error;
+        // }
+        // onComplete(err, out);
     }
 
     public parseASTCTex (file: ArrayBuffer | ArrayBufferView, options: IDownloadParseOptions, onComplete: CompleteCallback<IMemoryImageSource>) {

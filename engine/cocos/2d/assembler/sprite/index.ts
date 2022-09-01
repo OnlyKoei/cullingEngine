@@ -26,8 +26,8 @@
 import { UIRenderer } from '../../framework/ui-renderer';
 import { IAssemblerManager } from '../../renderer/base';
 import { Sprite } from '../../components';
-import { barFilled } from './bar-filled';
-import { radialFilled } from './radial-filled';
+// import { barFilled } from './bar-filled';
+// import { radialFilled } from './radial-filled';
 import { simple } from './simple';
 import { sliced } from './sliced';
 import { tiled } from './tiled';
@@ -50,11 +50,11 @@ const spriteAssembler: IAssemblerManager = {
             util = tiled;
             break;
         case SpriteType.FILLED:
-            if (comp.fillType === FillType.RADIAL) {
-                util = radialFilled;
-            } else {
-                util = barFilled;
-            }
+            // if (comp.fillType === FillType.RADIAL) {
+            //     util = radialFilled;
+            // } else {
+            //     util = barFilled;
+            // }
             break;
             // case SpriteType.MESH:
             //     util = meshRenderUtil;
@@ -78,6 +78,6 @@ export {
     spriteAssembler,
     simple,
     sliced,
-    barFilled,
-    radialFilled,
+    // barFilled,
+    // radialFilled,
 };

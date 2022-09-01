@@ -524,11 +524,11 @@ export class Sprite extends UIRenderer {
         if (this._spriteFrame) {
             texture = this._spriteFrame.texture;
         }
-        let value = false;
-        if (texture instanceof TextureBase) {
-            const format = texture.getPixelFormat();
-            value = (format === PixelFormat.RGBA_ETC1 || format === PixelFormat.RGB_A_PVRTC_4BPPV1 || format === PixelFormat.RGB_A_PVRTC_2BPPV1);
-        }
+        const value = false;
+        // if (texture instanceof TextureBase) {
+        // const format = texture.getPixelFormat();
+        // value = (format === PixelFormat.RGBA_ETC1 || format === PixelFormat.RGB_A_PVRTC_4BPPV1 || format === PixelFormat.RGB_A_PVRTC_2BPPV1);
+        // }
 
         if (value && this.grayscale) {
             this._instanceMaterialType = InstanceMaterialType.USE_ALPHA_SEPARATED_AND_GRAY;

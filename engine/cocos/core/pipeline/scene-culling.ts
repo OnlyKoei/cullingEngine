@@ -52,34 +52,34 @@ function getRenderObject (model: Model, camera: Camera) {
 }
 
 export function validPunctualLightsCulling (pipeline: RenderPipeline, camera: Camera) {
-    const sceneData = pipeline.pipelineSceneData;
-    const validPunctualLights = sceneData.validPunctualLights;
-    validPunctualLights.length = 0;
+    // const sceneData = pipeline.pipelineSceneData;
+    // const validPunctualLights = sceneData.validPunctualLights;
+    // validPunctualLights.length = 0;
 
-    const { spotLights } = camera.scene!;
-    for (let i = 0; i < spotLights.length; i++) {
-        const light = spotLights[i];
-        if (light.baked) {
-            continue;
-        }
+    // const { spotLights } = camera.scene!;
+    // for (let i = 0; i < spotLights.length; i++) {
+    //     const light = spotLights[i];
+    //     if (light.baked) {
+    //         continue;
+    //     }
 
-        Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
-        if (intersect.sphereFrustum(_sphere, camera.frustum)) {
-            validPunctualLights.push(light);
-        }
-    }
+    //     Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
+    //     if (intersect.sphereFrustum(_sphere, camera.frustum)) {
+    //         validPunctualLights.push(light);
+    //     }
+    // }
 
-    const { sphereLights } = camera.scene!;
-    for (let i = 0; i < sphereLights.length; i++) {
-        const light = sphereLights[i];
-        if (light.baked) {
-            continue;
-        }
-        Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
-        if (intersect.sphereFrustum(_sphere, camera.frustum)) {
-            validPunctualLights.push(light);
-        }
-    }
+    // const { sphereLights } = camera.scene!;
+    // for (let i = 0; i < sphereLights.length; i++) {
+    //     const light = sphereLights[i];
+    //     if (light.baked) {
+    //         continue;
+    //     }
+    //     Sphere.set(_sphere, light.position.x, light.position.y, light.position.z, light.range);
+    //     if (intersect.sphereFrustum(_sphere, camera.frustum)) {
+    //         validPunctualLights.push(light);
+    //     }
+    // }
 }
 export function shadowCulling (camera: Camera, sceneData: PipelineSceneData, layer: ShadowLayerVolume) {
     const scene = camera.scene!;

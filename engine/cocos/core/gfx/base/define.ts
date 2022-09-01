@@ -228,25 +228,25 @@ export enum Format {
     BC7_SRGB,
 
     // Ericsson Texture Compression Format
-    ETC_RGB8,
-    ETC2_RGB8,
-    ETC2_SRGB8,
-    ETC2_RGB8_A1,
-    ETC2_SRGB8_A1,
-    ETC2_RGBA8,
-    ETC2_SRGB8_A8,
-    EAC_R11,
-    EAC_R11SN,
-    EAC_RG11,
-    EAC_RG11SN,
+    // ETC_RGB8,
+    // ETC2_RGB8,
+    // ETC2_SRGB8,
+    // ETC2_RGB8_A1,
+    // ETC2_SRGB8_A1,
+    // ETC2_RGBA8,
+    // ETC2_SRGB8_A8,
+    // EAC_R11,
+    // EAC_R11SN,
+    // EAC_RG11,
+    // EAC_RG11SN,
 
-    // PVRTC (PowerVR)
-    PVRTC_RGB2,
-    PVRTC_RGBA2,
-    PVRTC_RGB4,
-    PVRTC_RGBA4,
-    PVRTC2_2BPP,
-    PVRTC2_4BPP,
+    // // PVRTC (PowerVR)
+    // PVRTC_RGB2,
+    // PVRTC_RGBA2,
+    // PVRTC_RGB4,
+    // PVRTC_RGBA4,
+    // PVRTC2_2BPP,
+    // PVRTC2_4BPP,
 
     // ASTC (Adaptive Scalable Texture Compression)
     ASTC_RGBA_4X4,
@@ -2026,41 +2026,41 @@ export const FormatInfos = Object.freeze([
     new FormatInfo('DEPTH', 4, 1, FormatType.FLOAT, false, true, false, false),
     new FormatInfo('DEPTH_STENCIL', 5, 2, FormatType.FLOAT, false, true, true, false),
 
-    new FormatInfo('BC1', 1, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('BC1_ALPHA', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC1_SRGB', 1, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('BC1_SRGB_ALPHA', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC2', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC2_SRGB', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC3', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC3_SRGB', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC4', 1, 1, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('BC4_SNORM', 1, 1, FormatType.SNORM, false, false, false, true),
-    new FormatInfo('BC5', 1, 2, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('BC5_SNORM', 1, 2, FormatType.SNORM, false, false, false, true),
-    new FormatInfo('BC6H_UF16', 1, 3, FormatType.UFLOAT, false, false, false, true),
-    new FormatInfo('BC6H_SF16', 1, 3, FormatType.FLOAT, false, false, false, true),
-    new FormatInfo('BC7', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('BC7_SRGB', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC1', 1, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('BC1_ALPHA', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC1_SRGB', 1, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('BC1_SRGB_ALPHA', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC2', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC2_SRGB', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC3', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC3_SRGB', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC4', 1, 1, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('BC4_SNORM', 1, 1, FormatType.SNORM, false, false, false, true),
+    // new FormatInfo('BC5', 1, 2, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('BC5_SNORM', 1, 2, FormatType.SNORM, false, false, false, true),
+    // new FormatInfo('BC6H_UF16', 1, 3, FormatType.UFLOAT, false, false, false, true),
+    // new FormatInfo('BC6H_SF16', 1, 3, FormatType.FLOAT, false, false, false, true),
+    // new FormatInfo('BC7', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('BC7_SRGB', 1, 4, FormatType.UNORM, true, false, false, true),
 
-    new FormatInfo('ETC_RGB8', 1, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('ETC2_RGB8', 1, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('ETC2_SRGB8', 1, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('ETC2_RGB8_A1', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('ETC2_SRGB8_A1', 1, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('ETC2_RGBA8', 2, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('ETC2_SRGB8_A8', 2, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('EAC_R11', 1, 1, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('EAC_R11SN', 1, 1, FormatType.SNORM, false, false, false, true),
-    new FormatInfo('EAC_RG11', 2, 2, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('EAC_RG11SN', 2, 2, FormatType.SNORM, false, false, false, true),
+    // new FormatInfo('ETC_RGB8', 1, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('ETC2_RGB8', 1, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('ETC2_SRGB8', 1, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('ETC2_RGB8_A1', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('ETC2_SRGB8_A1', 1, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('ETC2_RGBA8', 2, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('ETC2_SRGB8_A8', 2, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('EAC_R11', 1, 1, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('EAC_R11SN', 1, 1, FormatType.SNORM, false, false, false, true),
+    // new FormatInfo('EAC_RG11', 2, 2, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('EAC_RG11SN', 2, 2, FormatType.SNORM, false, false, false, true),
 
-    new FormatInfo('PVRTC_RGB2', 2, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('PVRTC_RGBA2', 2, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('PVRTC_RGB4', 2, 3, FormatType.UNORM, false, false, false, true),
-    new FormatInfo('PVRTC_RGBA4', 2, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('PVRTC2_2BPP', 2, 4, FormatType.UNORM, true, false, false, true),
-    new FormatInfo('PVRTC2_4BPP', 2, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('PVRTC_RGB2', 2, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('PVRTC_RGBA2', 2, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('PVRTC_RGB4', 2, 3, FormatType.UNORM, false, false, false, true),
+    // new FormatInfo('PVRTC_RGBA4', 2, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('PVRTC2_2BPP', 2, 4, FormatType.UNORM, true, false, false, true),
+    // new FormatInfo('PVRTC2_4BPP', 2, 4, FormatType.UNORM, true, false, false, true),
 
     new FormatInfo('ASTC_RGBA_4x4', 1, 4, FormatType.UNORM, true, false, false, true),
     new FormatInfo('ASTC_RGBA_5x4', 1, 4, FormatType.UNORM, true, false, false, true),
@@ -2122,95 +2122,95 @@ export function FormatSize (format: Format, width: number, height: number, depth
         return (width * height * depth * FormatInfos[format].size);
     } else {
         switch (format) {
-            case Format.BC1:
-            case Format.BC1_ALPHA:
-            case Format.BC1_SRGB:
-            case Format.BC1_SRGB_ALPHA:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 8 * depth;
-            case Format.BC2:
-            case Format.BC2_SRGB:
-            case Format.BC3:
-            case Format.BC3_SRGB:
-            case Format.BC4:
-            case Format.BC4_SNORM:
-            case Format.BC6H_SF16:
-            case Format.BC6H_UF16:
-            case Format.BC7:
-            case Format.BC7_SRGB:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 16 * depth;
-            case Format.BC5:
-            case Format.BC5_SNORM:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 32 * depth;
+        case Format.BC1:
+        case Format.BC1_ALPHA:
+        case Format.BC1_SRGB:
+        case Format.BC1_SRGB_ALPHA:
+            return Math.ceil(width / 4) * Math.ceil(height / 4) * 8 * depth;
+        case Format.BC2:
+        case Format.BC2_SRGB:
+        case Format.BC3:
+        case Format.BC3_SRGB:
+        case Format.BC4:
+        case Format.BC4_SNORM:
+        case Format.BC6H_SF16:
+        case Format.BC6H_UF16:
+        case Format.BC7:
+        case Format.BC7_SRGB:
+            return Math.ceil(width / 4) * Math.ceil(height / 4) * 16 * depth;
+        case Format.BC5:
+        case Format.BC5_SNORM:
+            return Math.ceil(width / 4) * Math.ceil(height / 4) * 32 * depth;
 
-            case Format.ETC_RGB8:
-            case Format.ETC2_RGB8:
-            case Format.ETC2_SRGB8:
-            case Format.ETC2_RGB8_A1:
-            case Format.EAC_R11:
-            case Format.EAC_R11SN:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 8 * depth;
-            case Format.ETC2_RGBA8:
-            case Format.ETC2_SRGB8_A1:
-            case Format.EAC_RG11:
-            case Format.EAC_RG11SN:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 16 * depth;
+            // case Format.ETC_RGB8:
+            // case Format.ETC2_RGB8:
+            // case Format.ETC2_SRGB8:
+            // case Format.ETC2_RGB8_A1:
+            // case Format.EAC_R11:
+            // case Format.EAC_R11SN:
+            //     return Math.ceil(width / 4) * Math.ceil(height / 4) * 8 * depth;
+            // case Format.ETC2_RGBA8:
+            // case Format.ETC2_SRGB8_A1:
+            // case Format.EAC_RG11:
+            // case Format.EAC_RG11SN:
+            //     return Math.ceil(width / 4) * Math.ceil(height / 4) * 16 * depth;
 
-            case Format.PVRTC_RGB2:
-            case Format.PVRTC_RGBA2:
-            case Format.PVRTC2_2BPP:
-                return Math.ceil(width / 8) * Math.ceil(height / 4) * 8 * depth;
+            // case Format.PVRTC_RGB2:
+            // case Format.PVRTC_RGBA2:
+            // case Format.PVRTC2_2BPP:
+            //     return Math.ceil(width / 8) * Math.ceil(height / 4) * 8 * depth;
 
-            case Format.PVRTC_RGB4:
-            case Format.PVRTC_RGBA4:
-            case Format.PVRTC2_4BPP:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 8 * depth;
+            // case Format.PVRTC_RGB4:
+            // case Format.PVRTC_RGBA4:
+            // case Format.PVRTC2_4BPP:
+            //     return Math.ceil(width / 4) * Math.ceil(height / 4) * 8 * depth;
 
-            case Format.ASTC_RGBA_4X4:
-            case Format.ASTC_SRGBA_4X4:
-                return Math.ceil(width / 4) * Math.ceil(height / 4) * 16 * depth;
-            case Format.ASTC_RGBA_5X4:
-            case Format.ASTC_SRGBA_5X4:
-                return Math.ceil(width / 5) * Math.ceil(height / 4) * 16 * depth;
-            case Format.ASTC_RGBA_5X5:
-            case Format.ASTC_SRGBA_5X5:
-                return Math.ceil(width / 5) * Math.ceil(height / 5) * 16 * depth;
-            case Format.ASTC_RGBA_6X5:
-            case Format.ASTC_SRGBA_6X5:
-                return Math.ceil(width / 6) * Math.ceil(height / 5) * 16 * depth;
-            case Format.ASTC_RGBA_6X6:
-            case Format.ASTC_SRGBA_6X6:
-                return Math.ceil(width / 6) * Math.ceil(height / 6) * 16 * depth;
-            case Format.ASTC_RGBA_8X5:
-            case Format.ASTC_SRGBA_8X5:
-                return Math.ceil(width / 8) * Math.ceil(height / 5) * 16 * depth;
-            case Format.ASTC_RGBA_8X6:
-            case Format.ASTC_SRGBA_8X6:
-                return Math.ceil(width / 8) * Math.ceil(height / 6) * 16 * depth;
-            case Format.ASTC_RGBA_8X8:
-            case Format.ASTC_SRGBA_8X8:
-                return Math.ceil(width / 8) * Math.ceil(height / 8) * 16 * depth;
-            case Format.ASTC_RGBA_10X5:
-            case Format.ASTC_SRGBA_10X5:
-                return Math.ceil(width / 10) * Math.ceil(height / 5) * 16 * depth;
-            case Format.ASTC_RGBA_10X6:
-            case Format.ASTC_SRGBA_10X6:
-                return Math.ceil(width / 10) * Math.ceil(height / 6) * 16 * depth;
-            case Format.ASTC_RGBA_10X8:
-            case Format.ASTC_SRGBA_10X8:
-                return Math.ceil(width / 10) * Math.ceil(height / 8) * 16 * depth;
-            case Format.ASTC_RGBA_10X10:
-            case Format.ASTC_SRGBA_10X10:
-                return Math.ceil(width / 10) * Math.ceil(height / 10) * 16 * depth;
-            case Format.ASTC_RGBA_12X10:
-            case Format.ASTC_SRGBA_12X10:
-                return Math.ceil(width / 12) * Math.ceil(height / 10) * 16 * depth;
-            case Format.ASTC_RGBA_12X12:
-            case Format.ASTC_SRGBA_12X12:
-                return Math.ceil(width / 12) * Math.ceil(height / 12) * 16 * depth;
+        case Format.ASTC_RGBA_4X4:
+        case Format.ASTC_SRGBA_4X4:
+            return Math.ceil(width / 4) * Math.ceil(height / 4) * 16 * depth;
+        case Format.ASTC_RGBA_5X4:
+        case Format.ASTC_SRGBA_5X4:
+            return Math.ceil(width / 5) * Math.ceil(height / 4) * 16 * depth;
+        case Format.ASTC_RGBA_5X5:
+        case Format.ASTC_SRGBA_5X5:
+            return Math.ceil(width / 5) * Math.ceil(height / 5) * 16 * depth;
+        case Format.ASTC_RGBA_6X5:
+        case Format.ASTC_SRGBA_6X5:
+            return Math.ceil(width / 6) * Math.ceil(height / 5) * 16 * depth;
+        case Format.ASTC_RGBA_6X6:
+        case Format.ASTC_SRGBA_6X6:
+            return Math.ceil(width / 6) * Math.ceil(height / 6) * 16 * depth;
+        case Format.ASTC_RGBA_8X5:
+        case Format.ASTC_SRGBA_8X5:
+            return Math.ceil(width / 8) * Math.ceil(height / 5) * 16 * depth;
+        case Format.ASTC_RGBA_8X6:
+        case Format.ASTC_SRGBA_8X6:
+            return Math.ceil(width / 8) * Math.ceil(height / 6) * 16 * depth;
+        case Format.ASTC_RGBA_8X8:
+        case Format.ASTC_SRGBA_8X8:
+            return Math.ceil(width / 8) * Math.ceil(height / 8) * 16 * depth;
+        case Format.ASTC_RGBA_10X5:
+        case Format.ASTC_SRGBA_10X5:
+            return Math.ceil(width / 10) * Math.ceil(height / 5) * 16 * depth;
+        case Format.ASTC_RGBA_10X6:
+        case Format.ASTC_SRGBA_10X6:
+            return Math.ceil(width / 10) * Math.ceil(height / 6) * 16 * depth;
+        case Format.ASTC_RGBA_10X8:
+        case Format.ASTC_SRGBA_10X8:
+            return Math.ceil(width / 10) * Math.ceil(height / 8) * 16 * depth;
+        case Format.ASTC_RGBA_10X10:
+        case Format.ASTC_SRGBA_10X10:
+            return Math.ceil(width / 10) * Math.ceil(height / 10) * 16 * depth;
+        case Format.ASTC_RGBA_12X10:
+        case Format.ASTC_SRGBA_12X10:
+            return Math.ceil(width / 12) * Math.ceil(height / 10) * 16 * depth;
+        case Format.ASTC_RGBA_12X12:
+        case Format.ASTC_SRGBA_12X12:
+            return Math.ceil(width / 12) * Math.ceil(height / 12) * 16 * depth;
 
-            default: {
-                return 0;
-            }
+        default: {
+            return 0;
+        }
         }
     }
 }
@@ -2289,30 +2289,30 @@ export function getTypedArrayConstructor (info: FormatInfo): TypedArrayConstruct
     }
     const stride = info.size / info.count;
     switch (info.type) {
-        case FormatType.UNORM:
-        case FormatType.UINT: {
-            switch (stride) {
-                case 1: return Uint8Array;
-                case 2: return Uint16Array;
-                case 4: return Uint32Array;
-                default:
-                    return Uint8Array;
-            }
-        }
-        case FormatType.SNORM:
-        case FormatType.INT: {
-            switch (stride) {
-                case 1: return Int8Array;
-                case 2: return Int16Array;
-                case 4: return Int32Array;
-                default:
-                    return Int8Array;
-            }
-        }
-        case FormatType.FLOAT: {
-            return Float32Array;
-        }
+    case FormatType.UNORM:
+    case FormatType.UINT: {
+        switch (stride) {
+        case 1: return Uint8Array;
+        case 2: return Uint16Array;
+        case 4: return Uint32Array;
         default:
+            return Uint8Array;
+        }
+    }
+    case FormatType.SNORM:
+    case FormatType.INT: {
+        switch (stride) {
+        case 1: return Int8Array;
+        case 2: return Int16Array;
+        case 4: return Int32Array;
+        default:
+            return Int8Array;
+        }
+    }
+    case FormatType.FLOAT: {
+        return Float32Array;
+    }
+    default:
     }
     return Float32Array;
 }
@@ -2324,88 +2324,88 @@ export interface FormatAlignment {
 
 export function formatAlignment (format: Format): FormatAlignment {
     switch (format) {
-        case Format.BC1:
-        case Format.BC1_ALPHA:
-        case Format.BC1_SRGB:
-        case Format.BC1_SRGB_ALPHA:
-        case Format.BC2:
-        case Format.BC2_SRGB:
-        case Format.BC3:
-        case Format.BC3_SRGB:
-        case Format.BC4:
-        case Format.BC4_SNORM:
-        case Format.BC6H_SF16:
-        case Format.BC6H_UF16:
-        case Format.BC7:
-        case Format.BC7_SRGB:
-        case Format.BC5:
-        case Format.BC5_SNORM:
-        case Format.ETC_RGB8:
-        case Format.ETC2_RGB8:
-        case Format.ETC2_SRGB8:
-        case Format.ETC2_RGB8_A1:
-        case Format.EAC_R11:
-        case Format.EAC_R11SN:
-        case Format.ETC2_RGBA8:
-        case Format.ETC2_SRGB8_A1:
-        case Format.EAC_RG11:
-        case Format.EAC_RG11SN:
-            return { width: 4, height: 4 };
+    case Format.BC1:
+    case Format.BC1_ALPHA:
+    case Format.BC1_SRGB:
+    case Format.BC1_SRGB_ALPHA:
+    case Format.BC2:
+    case Format.BC2_SRGB:
+    case Format.BC3:
+    case Format.BC3_SRGB:
+    case Format.BC4:
+    case Format.BC4_SNORM:
+    case Format.BC6H_SF16:
+    case Format.BC6H_UF16:
+    case Format.BC7:
+    case Format.BC7_SRGB:
+    case Format.BC5:
+    case Format.BC5_SNORM:
+    // case Format.ETC_RGB8:
+    // case Format.ETC2_RGB8:
+    // case Format.ETC2_SRGB8:
+    // case Format.ETC2_RGB8_A1:
+    // case Format.EAC_R11:
+    // case Format.EAC_R11SN:
+    // case Format.ETC2_RGBA8:
+    // case Format.ETC2_SRGB8_A1:
+    // case Format.EAC_RG11:
+    // case Format.EAC_RG11SN:
+        return { width: 4, height: 4 };
 
-        case Format.PVRTC_RGB2:
-        case Format.PVRTC_RGBA2:
-        case Format.PVRTC2_2BPP:
-            return { width: 8, height: 4 };
+        // case Format.PVRTC_RGB2:
+        // case Format.PVRTC_RGBA2:
+        // case Format.PVRTC2_2BPP:
+        //     return { width: 8, height: 4 };
 
-        case Format.PVRTC_RGB4:
-        case Format.PVRTC_RGBA4:
-        case Format.PVRTC2_4BPP:
-            return { width: 4, height: 4 };
+        // case Format.PVRTC_RGB4:
+        // case Format.PVRTC_RGBA4:
+        // case Format.PVRTC2_4BPP:
+        //     return { width: 4, height: 4 };
 
-        case Format.ASTC_RGBA_4X4:
-        case Format.ASTC_SRGBA_4X4:
-            return { width: 4, height: 4 };
-        case Format.ASTC_RGBA_5X4:
-        case Format.ASTC_SRGBA_5X4:
-            return { width: 5, height: 4 };
-        case Format.ASTC_RGBA_5X5:
-        case Format.ASTC_SRGBA_5X5:
-            return { width: 5, height: 5 };
-        case Format.ASTC_RGBA_6X5:
-        case Format.ASTC_SRGBA_6X5:
-            return { width: 6, height: 5 };
-        case Format.ASTC_RGBA_6X6:
-        case Format.ASTC_SRGBA_6X6:
-            return { width: 6, height: 6 };
-        case Format.ASTC_RGBA_8X5:
-        case Format.ASTC_SRGBA_8X5:
-            return { width: 8, height: 5 };
-        case Format.ASTC_RGBA_8X6:
-        case Format.ASTC_SRGBA_8X6:
-            return { width: 8, height: 6 };
-        case Format.ASTC_RGBA_8X8:
-        case Format.ASTC_SRGBA_8X8:
-            return { width: 8, height: 8 };
-        case Format.ASTC_RGBA_10X5:
-        case Format.ASTC_SRGBA_10X5:
-            return { width: 10, height: 5 };
-        case Format.ASTC_RGBA_10X6:
-        case Format.ASTC_SRGBA_10X6:
-            return { width: 10, height: 6 };
-        case Format.ASTC_RGBA_10X8:
-        case Format.ASTC_SRGBA_10X8:
-            return { width: 10, height: 8 };
-        case Format.ASTC_RGBA_10X10:
-        case Format.ASTC_SRGBA_10X10:
-            return { width: 10, height: 10 };
-        case Format.ASTC_RGBA_12X10:
-        case Format.ASTC_SRGBA_12X10:
-            return { width: 12, height: 10 };
-        case Format.ASTC_RGBA_12X12:
-        case Format.ASTC_SRGBA_12X12:
-            return { width: 12, height: 12 };
-        default:
-            return { width: 1, height: 1 };
+    case Format.ASTC_RGBA_4X4:
+    case Format.ASTC_SRGBA_4X4:
+        return { width: 4, height: 4 };
+    case Format.ASTC_RGBA_5X4:
+    case Format.ASTC_SRGBA_5X4:
+        return { width: 5, height: 4 };
+    case Format.ASTC_RGBA_5X5:
+    case Format.ASTC_SRGBA_5X5:
+        return { width: 5, height: 5 };
+    case Format.ASTC_RGBA_6X5:
+    case Format.ASTC_SRGBA_6X5:
+        return { width: 6, height: 5 };
+    case Format.ASTC_RGBA_6X6:
+    case Format.ASTC_SRGBA_6X6:
+        return { width: 6, height: 6 };
+    case Format.ASTC_RGBA_8X5:
+    case Format.ASTC_SRGBA_8X5:
+        return { width: 8, height: 5 };
+    case Format.ASTC_RGBA_8X6:
+    case Format.ASTC_SRGBA_8X6:
+        return { width: 8, height: 6 };
+    case Format.ASTC_RGBA_8X8:
+    case Format.ASTC_SRGBA_8X8:
+        return { width: 8, height: 8 };
+    case Format.ASTC_RGBA_10X5:
+    case Format.ASTC_SRGBA_10X5:
+        return { width: 10, height: 5 };
+    case Format.ASTC_RGBA_10X6:
+    case Format.ASTC_SRGBA_10X6:
+        return { width: 10, height: 6 };
+    case Format.ASTC_RGBA_10X8:
+    case Format.ASTC_SRGBA_10X8:
+        return { width: 10, height: 8 };
+    case Format.ASTC_RGBA_10X10:
+    case Format.ASTC_SRGBA_10X10:
+        return { width: 10, height: 10 };
+    case Format.ASTC_RGBA_12X10:
+    case Format.ASTC_SRGBA_12X10:
+        return { width: 12, height: 10 };
+    case Format.ASTC_RGBA_12X12:
+    case Format.ASTC_SRGBA_12X12:
+        return { width: 12, height: 12 };
+    default:
+        return { width: 1, height: 1 };
     }
 }
 

@@ -23,6 +23,7 @@
  THE SOFTWARE.
 */
 
+import { EDITOR } from 'internal:constants';
 import { CCClass } from '../data/class';
 import { ValueType } from '../value-types/value-type';
 import { Mat3 } from './mat3';
@@ -95,10 +96,12 @@ export class Mat4 extends ValueType {
         m20: number, m21: number, m22: number, m23: number,
         m30: number, m31: number, m32: number, m33: number,
     ) {
-        out.m00 = m00; out.m01 = m01; out.m02 = m02; out.m03 = m03;
-        out.m04 = m10; out.m05 = m11; out.m06 = m12; out.m07 = m13;
-        out.m08 = m20; out.m09 = m21; out.m10 = m22; out.m11 = m23;
-        out.m12 = m30; out.m13 = m31; out.m14 = m32; out.m15 = m33;
+        if (EDITOR) {
+            out.m00 = m00; out.m01 = m01; out.m02 = m02; out.m03 = m03;
+            out.m04 = m10; out.m05 = m11; out.m06 = m12; out.m07 = m13;
+            out.m08 = m20; out.m09 = m21; out.m10 = m22; out.m11 = m23;
+            out.m12 = m30; out.m13 = m31; out.m14 = m32; out.m15 = m33;
+        }
         return out;
     }
 
@@ -107,22 +110,24 @@ export class Mat4 extends ValueType {
      * @zh 将目标赋值为单位矩阵
      */
     public static identity <Out extends IMat4Like> (out: Out) {
-        out.m00 = 1;
-        out.m01 = 0;
-        out.m02 = 0;
-        out.m03 = 0;
-        out.m04 = 0;
-        out.m05 = 1;
-        out.m06 = 0;
-        out.m07 = 0;
-        out.m08 = 0;
-        out.m09 = 0;
-        out.m10 = 1;
-        out.m11 = 0;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = 0;
-        out.m15 = 1;
+        if (EDITOR) {
+            out.m00 = 1;
+            out.m01 = 0;
+            out.m02 = 0;
+            out.m03 = 0;
+            out.m04 = 0;
+            out.m05 = 1;
+            out.m06 = 0;
+            out.m07 = 0;
+            out.m08 = 0;
+            out.m09 = 0;
+            out.m10 = 1;
+            out.m11 = 0;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = 0;
+            out.m15 = 1;
+        }
         return out;
     }
 
@@ -131,38 +136,40 @@ export class Mat4 extends ValueType {
      * @zh 转置矩阵
      */
     public static transpose <Out extends IMat4Like> (out: Out, a: Out) {
-        // If we are transposing ourselves we can skip a few steps but have to cache some values
-        if (out === a) {
-            const a01 = a.m01; const a02 = a.m02; const a03 = a.m03; const a12 = a.m06; const a13 = a.m07; const a23 = a.m11;
-            out.m01 = a.m04;
-            out.m02 = a.m08;
-            out.m03 = a.m12;
-            out.m04 = a01;
-            out.m06 = a.m09;
-            out.m07 = a.m13;
-            out.m08 = a02;
-            out.m09 = a12;
-            out.m11 = a.m14;
-            out.m12 = a03;
-            out.m13 = a13;
-            out.m14 = a23;
-        } else {
-            out.m00 = a.m00;
-            out.m01 = a.m04;
-            out.m02 = a.m08;
-            out.m03 = a.m12;
-            out.m04 = a.m01;
-            out.m05 = a.m05;
-            out.m06 = a.m09;
-            out.m07 = a.m13;
-            out.m08 = a.m02;
-            out.m09 = a.m06;
-            out.m10 = a.m10;
-            out.m11 = a.m14;
-            out.m12 = a.m03;
-            out.m13 = a.m07;
-            out.m14 = a.m11;
-            out.m15 = a.m15;
+        if (EDITOR) {
+            // If we are transposing ourselves we can skip a few steps but have to cache some values
+            if (out === a) {
+                const a01 = a.m01; const a02 = a.m02; const a03 = a.m03; const a12 = a.m06; const a13 = a.m07; const a23 = a.m11;
+                out.m01 = a.m04;
+                out.m02 = a.m08;
+                out.m03 = a.m12;
+                out.m04 = a01;
+                out.m06 = a.m09;
+                out.m07 = a.m13;
+                out.m08 = a02;
+                out.m09 = a12;
+                out.m11 = a.m14;
+                out.m12 = a03;
+                out.m13 = a13;
+                out.m14 = a23;
+            } else {
+                out.m00 = a.m00;
+                out.m01 = a.m04;
+                out.m02 = a.m08;
+                out.m03 = a.m12;
+                out.m04 = a.m01;
+                out.m05 = a.m05;
+                out.m06 = a.m09;
+                out.m07 = a.m13;
+                out.m08 = a.m02;
+                out.m09 = a.m06;
+                out.m10 = a.m10;
+                out.m11 = a.m14;
+                out.m12 = a.m03;
+                out.m13 = a.m07;
+                out.m14 = a.m11;
+                out.m15 = a.m15;
+            }
         }
         return out;
     }
@@ -291,26 +298,28 @@ export class Mat4 extends ValueType {
      * @zh 在给定矩阵变换基础上加入变换
      */
     public static transform <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, a: Out, v: VecLike) {
-        const x = v.x; const y = v.y; const z = v.z;
-        if (a === out) {
-            out.m12 = a.m00 * x + a.m04 * y + a.m08 * z + a.m12;
-            out.m13 = a.m01 * x + a.m05 * y + a.m09 * z + a.m13;
-            out.m14 = a.m02 * x + a.m06 * y + a.m10 * z + a.m14;
-            out.m15 = a.m03 * x + a.m07 * y + a.m11 * z + a.m15;
-        } else {
-            const a00 = a.m00; const a01 = a.m01; const a02 = a.m02; const a03 = a.m03;
-            const a10 = a.m04; const a11 = a.m05; const a12 = a.m06; const a13 = a.m07;
-            const a20 = a.m08; const a21 = a.m09; const a22 = a.m10; const a23 = a.m11;
-            const a30 = a.m12; const a31 = a.m13; const a32 = a.m14; const a33 = a.m15;
+        if (EDITOR) {
+            const x = v.x; const y = v.y; const z = v.z;
+            if (a === out) {
+                out.m12 = a.m00 * x + a.m04 * y + a.m08 * z + a.m12;
+                out.m13 = a.m01 * x + a.m05 * y + a.m09 * z + a.m13;
+                out.m14 = a.m02 * x + a.m06 * y + a.m10 * z + a.m14;
+                out.m15 = a.m03 * x + a.m07 * y + a.m11 * z + a.m15;
+            } else {
+                const a00 = a.m00; const a01 = a.m01; const a02 = a.m02; const a03 = a.m03;
+                const a10 = a.m04; const a11 = a.m05; const a12 = a.m06; const a13 = a.m07;
+                const a20 = a.m08; const a21 = a.m09; const a22 = a.m10; const a23 = a.m11;
+                const a30 = a.m12; const a31 = a.m13; const a32 = a.m14; const a33 = a.m15;
 
-            out.m00 = a00; out.m01 = a01; out.m02 = a02; out.m03 = a03;
-            out.m04 = a10; out.m05 = a11; out.m06 = a12; out.m07 = a13;
-            out.m08 = a20; out.m09 = a21; out.m10 = a22; out.m11 = a23;
+                out.m00 = a00; out.m01 = a01; out.m02 = a02; out.m03 = a03;
+                out.m04 = a10; out.m05 = a11; out.m06 = a12; out.m07 = a13;
+                out.m08 = a20; out.m09 = a21; out.m10 = a22; out.m11 = a23;
 
-            out.m12 = a00 * x + a10 * y + a20 * z + a.m12;
-            out.m13 = a01 * x + a11 * y + a21 * z + a.m13;
-            out.m14 = a02 * x + a12 * y + a22 * z + a.m14;
-            out.m15 = a03 * x + a13 * y + a23 * z + a.m15;
+                out.m12 = a00 * x + a10 * y + a20 * z + a.m12;
+                out.m13 = a01 * x + a11 * y + a21 * z + a.m13;
+                out.m14 = a02 * x + a12 * y + a22 * z + a.m14;
+                out.m15 = a03 * x + a13 * y + a23 * z + a.m15;
+            }
         }
         return out;
     }
@@ -320,18 +329,20 @@ export class Mat4 extends ValueType {
      * @zh 在给定矩阵变换基础上加入新位移变换
      */
     public static translate <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, a: Out, v: VecLike) {
-        if (a === out) {
-            out.m12 += v.x;
-            out.m13 += v.y;
-            out.m14 += v.z;
-        } else {
-            out.m00 = a.m00; out.m01 = a.m01; out.m02 = a.m02; out.m03 = a.m03;
-            out.m04 = a.m04; out.m05 = a.m05; out.m06 = a.m06; out.m07 = a.m07;
-            out.m08 = a.m08; out.m09 = a.m09; out.m10 = a.m10; out.m11 = a.m11;
-            out.m12 += v.x;
-            out.m13 += v.y;
-            out.m14 += v.z;
-            out.m15 = a.m15;
+        if (EDITOR) {
+            if (a === out) {
+                out.m12 += v.x;
+                out.m13 += v.y;
+                out.m14 += v.z;
+            } else {
+                out.m00 = a.m00; out.m01 = a.m01; out.m02 = a.m02; out.m03 = a.m03;
+                out.m04 = a.m04; out.m05 = a.m05; out.m06 = a.m06; out.m07 = a.m07;
+                out.m08 = a.m08; out.m09 = a.m09; out.m10 = a.m10; out.m11 = a.m11;
+                out.m12 += v.x;
+                out.m13 += v.y;
+                out.m14 += v.z;
+                out.m15 = a.m15;
+            }
         }
         return out;
     }
@@ -341,23 +352,25 @@ export class Mat4 extends ValueType {
      * @zh 在给定矩阵变换基础上加入新缩放变换
      */
     public static scale <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, a: Out, v: VecLike) {
-        const x = v.x; const y = v.y; const z = v.z;
-        out.m00 = a.m00 * x;
-        out.m01 = a.m01 * x;
-        out.m02 = a.m02 * x;
-        out.m03 = a.m03 * x;
-        out.m04 = a.m04 * y;
-        out.m05 = a.m05 * y;
-        out.m06 = a.m06 * y;
-        out.m07 = a.m07 * y;
-        out.m08 = a.m08 * z;
-        out.m09 = a.m09 * z;
-        out.m10 = a.m10 * z;
-        out.m11 = a.m11 * z;
-        out.m12 = a.m12;
-        out.m13 = a.m13;
-        out.m14 = a.m14;
-        out.m15 = a.m15;
+        if (EDITOR) {
+            const x = v.x; const y = v.y; const z = v.z;
+            out.m00 = a.m00 * x;
+            out.m01 = a.m01 * x;
+            out.m02 = a.m02 * x;
+            out.m03 = a.m03 * x;
+            out.m04 = a.m04 * y;
+            out.m05 = a.m05 * y;
+            out.m06 = a.m06 * y;
+            out.m07 = a.m07 * y;
+            out.m08 = a.m08 * z;
+            out.m09 = a.m09 * z;
+            out.m10 = a.m10 * z;
+            out.m11 = a.m11 * z;
+            out.m12 = a.m12;
+            out.m13 = a.m13;
+            out.m14 = a.m14;
+            out.m15 = a.m15;
+        }
         return out;
     }
 
@@ -368,54 +381,55 @@ export class Mat4 extends ValueType {
      * @param axis axis of rotation
      */
     public static rotate <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, a: Out, rad: number, axis: VecLike) {
-        let x = axis.x; let y = axis.y; let z = axis.z;
+        if (EDITOR) {
+            let x = axis.x; let y = axis.y; let z = axis.z;
 
-        let len = Math.sqrt(x * x + y * y + z * z);
+            let len = Math.sqrt(x * x + y * y + z * z);
 
-        if (Math.abs(len) < EPSILON) {
-            return null;
+            if (Math.abs(len) < EPSILON) {
+                return null;
+            }
+
+            len = 1 / len;
+            x *= len;
+            y *= len;
+            z *= len;
+
+            const s = Math.sin(rad);
+            const c = Math.cos(rad);
+            const t = 1 - c;
+
+            const a00 = a.m00; const a01 = a.m01; const a02 = a.m02; const a03 = a.m03;
+            const a10 = a.m04; const a11 = a.m05; const a12 = a.m06; const a13 = a.m07;
+            const a20 = a.m08; const a21 = a.m09; const a22 = a.m10; const a23 = a.m11;
+
+            // Construct the elements of the rotation matrix
+            const b00 = x * x * t + c; const b01 = y * x * t + z * s; const b02 = z * x * t - y * s;
+            const b10 = x * y * t - z * s; const b11 = y * y * t + c; const b12 = z * y * t + x * s;
+            const b20 = x * z * t + y * s; const b21 = y * z * t - x * s; const b22 = z * z * t + c;
+
+            // Perform rotation-specific matrix multiplication
+            out.m00 = a00 * b00 + a10 * b01 + a20 * b02;
+            out.m01 = a01 * b00 + a11 * b01 + a21 * b02;
+            out.m02 = a02 * b00 + a12 * b01 + a22 * b02;
+            out.m03 = a03 * b00 + a13 * b01 + a23 * b02;
+            out.m04 = a00 * b10 + a10 * b11 + a20 * b12;
+            out.m05 = a01 * b10 + a11 * b11 + a21 * b12;
+            out.m06 = a02 * b10 + a12 * b11 + a22 * b12;
+            out.m07 = a03 * b10 + a13 * b11 + a23 * b12;
+            out.m08 = a00 * b20 + a10 * b21 + a20 * b22;
+            out.m09 = a01 * b20 + a11 * b21 + a21 * b22;
+            out.m10 = a02 * b20 + a12 * b21 + a22 * b22;
+            out.m11 = a03 * b20 + a13 * b21 + a23 * b22;
+
+            // If the source and destination differ, copy the unchanged last row
+            if (a !== out) {
+                out.m12 = a.m12;
+                out.m13 = a.m13;
+                out.m14 = a.m14;
+                out.m15 = a.m15;
+            }
         }
-
-        len = 1 / len;
-        x *= len;
-        y *= len;
-        z *= len;
-
-        const s = Math.sin(rad);
-        const c = Math.cos(rad);
-        const t = 1 - c;
-
-        const a00 = a.m00; const a01 = a.m01; const a02 = a.m02; const a03 = a.m03;
-        const a10 = a.m04; const a11 = a.m05; const a12 = a.m06; const a13 = a.m07;
-        const a20 = a.m08; const a21 = a.m09; const a22 = a.m10; const a23 = a.m11;
-
-        // Construct the elements of the rotation matrix
-        const b00 = x * x * t + c; const b01 = y * x * t + z * s; const b02 = z * x * t - y * s;
-        const b10 = x * y * t - z * s; const b11 = y * y * t + c; const b12 = z * y * t + x * s;
-        const b20 = x * z * t + y * s; const b21 = y * z * t - x * s; const b22 = z * z * t + c;
-
-        // Perform rotation-specific matrix multiplication
-        out.m00 = a00 * b00 + a10 * b01 + a20 * b02;
-        out.m01 = a01 * b00 + a11 * b01 + a21 * b02;
-        out.m02 = a02 * b00 + a12 * b01 + a22 * b02;
-        out.m03 = a03 * b00 + a13 * b01 + a23 * b02;
-        out.m04 = a00 * b10 + a10 * b11 + a20 * b12;
-        out.m05 = a01 * b10 + a11 * b11 + a21 * b12;
-        out.m06 = a02 * b10 + a12 * b11 + a22 * b12;
-        out.m07 = a03 * b10 + a13 * b11 + a23 * b12;
-        out.m08 = a00 * b20 + a10 * b21 + a20 * b22;
-        out.m09 = a01 * b20 + a11 * b21 + a21 * b22;
-        out.m10 = a02 * b20 + a12 * b21 + a22 * b22;
-        out.m11 = a03 * b20 + a13 * b21 + a23 * b22;
-
-        // If the source and destination differ, copy the unchanged last row
-        if (a !== out) {
-            out.m12 = a.m12;
-            out.m13 = a.m13;
-            out.m14 = a.m14;
-            out.m15 = a.m15;
-        }
-
         return out;
     }
 
@@ -425,37 +439,39 @@ export class Mat4 extends ValueType {
      * @param rad Angle of rotation (in radians)
      */
     public static rotateX <Out extends IMat4Like> (out: Out, a: Out, rad: number) {
-        const s = Math.sin(rad);
-        const c = Math.cos(rad);
-        const a10 = a.m04;
-        const a11 = a.m05;
-        const a12 = a.m06;
-        const a13 = a.m07;
-        const a20 = a.m08;
-        const a21 = a.m09;
-        const a22 = a.m10;
-        const a23 = a.m11;
+        if (EDITOR) {
+            const s = Math.sin(rad);
+            const c = Math.cos(rad);
+            const a10 = a.m04;
+            const a11 = a.m05;
+            const a12 = a.m06;
+            const a13 = a.m07;
+            const a20 = a.m08;
+            const a21 = a.m09;
+            const a22 = a.m10;
+            const a23 = a.m11;
 
-        if (a !== out) { // If the source and destination differ, copy the unchanged rows
-            out.m00 = a.m00;
-            out.m01 = a.m01;
-            out.m02 = a.m02;
-            out.m03 = a.m03;
-            out.m12 = a.m12;
-            out.m13 = a.m13;
-            out.m14 = a.m14;
-            out.m15 = a.m15;
+            if (a !== out) { // If the source and destination differ, copy the unchanged rows
+                out.m00 = a.m00;
+                out.m01 = a.m01;
+                out.m02 = a.m02;
+                out.m03 = a.m03;
+                out.m12 = a.m12;
+                out.m13 = a.m13;
+                out.m14 = a.m14;
+                out.m15 = a.m15;
+            }
+
+            // Perform axis-specific matrix multiplication
+            out.m04 = a10 * c + a20 * s;
+            out.m05 = a11 * c + a21 * s;
+            out.m06 = a12 * c + a22 * s;
+            out.m07 = a13 * c + a23 * s;
+            out.m08 = a20 * c - a10 * s;
+            out.m09 = a21 * c - a11 * s;
+            out.m10 = a22 * c - a12 * s;
+            out.m11 = a23 * c - a13 * s;
         }
-
-        // Perform axis-specific matrix multiplication
-        out.m04 = a10 * c + a20 * s;
-        out.m05 = a11 * c + a21 * s;
-        out.m06 = a12 * c + a22 * s;
-        out.m07 = a13 * c + a23 * s;
-        out.m08 = a20 * c - a10 * s;
-        out.m09 = a21 * c - a11 * s;
-        out.m10 = a22 * c - a12 * s;
-        out.m11 = a23 * c - a13 * s;
 
         return out;
     }
@@ -466,38 +482,39 @@ export class Mat4 extends ValueType {
      * @param rad Angle of rotation (in radians)
      */
     public static rotateY <Out extends IMat4Like> (out: Out, a: Out, rad: number) {
-        const s = Math.sin(rad);
-        const c = Math.cos(rad);
-        const a00 = a.m00;
-        const a01 = a.m01;
-        const a02 = a.m02;
-        const a03 = a.m03;
-        const a20 = a.m08;
-        const a21 = a.m09;
-        const a22 = a.m10;
-        const a23 = a.m11;
+        if (EDITOR) {
+            const s = Math.sin(rad);
+            const c = Math.cos(rad);
+            const a00 = a.m00;
+            const a01 = a.m01;
+            const a02 = a.m02;
+            const a03 = a.m03;
+            const a20 = a.m08;
+            const a21 = a.m09;
+            const a22 = a.m10;
+            const a23 = a.m11;
 
-        if (a !== out) { // If the source and destination differ, copy the unchanged rows
-            out.m04 = a.m04;
-            out.m05 = a.m05;
-            out.m06 = a.m06;
-            out.m07 = a.m07;
-            out.m12 = a.m12;
-            out.m13 = a.m13;
-            out.m14 = a.m14;
-            out.m15 = a.m15;
+            if (a !== out) { // If the source and destination differ, copy the unchanged rows
+                out.m04 = a.m04;
+                out.m05 = a.m05;
+                out.m06 = a.m06;
+                out.m07 = a.m07;
+                out.m12 = a.m12;
+                out.m13 = a.m13;
+                out.m14 = a.m14;
+                out.m15 = a.m15;
+            }
+
+            // Perform axis-specific matrix multiplication
+            out.m00 = a00 * c - a20 * s;
+            out.m01 = a01 * c - a21 * s;
+            out.m02 = a02 * c - a22 * s;
+            out.m03 = a03 * c - a23 * s;
+            out.m08 = a00 * s + a20 * c;
+            out.m09 = a01 * s + a21 * c;
+            out.m10 = a02 * s + a22 * c;
+            out.m11 = a03 * s + a23 * c;
         }
-
-        // Perform axis-specific matrix multiplication
-        out.m00 = a00 * c - a20 * s;
-        out.m01 = a01 * c - a21 * s;
-        out.m02 = a02 * c - a22 * s;
-        out.m03 = a03 * c - a23 * s;
-        out.m08 = a00 * s + a20 * c;
-        out.m09 = a01 * s + a21 * c;
-        out.m10 = a02 * s + a22 * c;
-        out.m11 = a03 * s + a23 * c;
-
         return out;
     }
 
@@ -507,39 +524,40 @@ export class Mat4 extends ValueType {
      * @param rad Angle of rotation (in radians)
      */
     public static rotateZ <Out extends IMat4Like> (out: Out, a: Out, rad: number) {
-        const s = Math.sin(rad);
-        const c = Math.cos(rad);
-        const a00 = a.m00;
-        const a01 = a.m01;
-        const a02 = a.m02;
-        const a03 = a.m03;
-        const a10 = a.m04;
-        const a11 = a.m05;
-        const a12 = a.m06;
-        const a13 = a.m07;
+        if (EDITOR) {
+            const s = Math.sin(rad);
+            const c = Math.cos(rad);
+            const a00 = a.m00;
+            const a01 = a.m01;
+            const a02 = a.m02;
+            const a03 = a.m03;
+            const a10 = a.m04;
+            const a11 = a.m05;
+            const a12 = a.m06;
+            const a13 = a.m07;
 
-        // If the source and destination differ, copy the unchanged last row
-        if (a !== out) {
-            out.m08 = a.m08;
-            out.m09 = a.m09;
-            out.m10 = a.m10;
-            out.m11 = a.m11;
-            out.m12 = a.m12;
-            out.m13 = a.m13;
-            out.m14 = a.m14;
-            out.m15 = a.m15;
+            // If the source and destination differ, copy the unchanged last row
+            if (a !== out) {
+                out.m08 = a.m08;
+                out.m09 = a.m09;
+                out.m10 = a.m10;
+                out.m11 = a.m11;
+                out.m12 = a.m12;
+                out.m13 = a.m13;
+                out.m14 = a.m14;
+                out.m15 = a.m15;
+            }
+
+            // Perform axis-specific matrix multiplication
+            out.m00 = a00 * c + a10 * s;
+            out.m01 = a01 * c + a11 * s;
+            out.m02 = a02 * c + a12 * s;
+            out.m03 = a03 * c + a13 * s;
+            out.m04 = a10 * c - a00 * s;
+            out.m05 = a11 * c - a01 * s;
+            out.m06 = a12 * c - a02 * s;
+            out.m07 = a13 * c - a03 * s;
         }
-
-        // Perform axis-specific matrix multiplication
-        out.m00 = a00 * c + a10 * s;
-        out.m01 = a01 * c + a11 * s;
-        out.m02 = a02 * c + a12 * s;
-        out.m03 = a03 * c + a13 * s;
-        out.m04 = a10 * c - a00 * s;
-        out.m05 = a11 * c - a01 * s;
-        out.m06 = a12 * c - a02 * s;
-        out.m07 = a13 * c - a03 * s;
-
         return out;
     }
 
@@ -548,22 +566,24 @@ export class Mat4 extends ValueType {
      * @zh 计算位移矩阵
      */
     public static fromTranslation <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, v: VecLike) {
-        out.m00 = 1;
-        out.m01 = 0;
-        out.m02 = 0;
-        out.m03 = 0;
-        out.m04 = 0;
-        out.m05 = 1;
-        out.m06 = 0;
-        out.m07 = 0;
-        out.m08 = 0;
-        out.m09 = 0;
-        out.m10 = 1;
-        out.m11 = 0;
-        out.m12 = v.x;
-        out.m13 = v.y;
-        out.m14 = v.z;
-        out.m15 = 1;
+        if (EDITOR) {
+            out.m00 = 1;
+            out.m01 = 0;
+            out.m02 = 0;
+            out.m03 = 0;
+            out.m04 = 0;
+            out.m05 = 1;
+            out.m06 = 0;
+            out.m07 = 0;
+            out.m08 = 0;
+            out.m09 = 0;
+            out.m10 = 1;
+            out.m11 = 0;
+            out.m12 = v.x;
+            out.m13 = v.y;
+            out.m14 = v.z;
+            out.m15 = 1;
+        }
         return out;
     }
 
@@ -572,22 +592,24 @@ export class Mat4 extends ValueType {
      * @zh 计算缩放矩阵
      */
     public static fromScaling <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, v: VecLike) {
-        out.m00 = v.x;
-        out.m01 = 0;
-        out.m02 = 0;
-        out.m03 = 0;
-        out.m04 = 0;
-        out.m05 = v.y;
-        out.m06 = 0;
-        out.m07 = 0;
-        out.m08 = 0;
-        out.m09 = 0;
-        out.m10 = v.z;
-        out.m11 = 0;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = 0;
-        out.m15 = 1;
+        if (EDITOR) {
+            out.m00 = v.x;
+            out.m01 = 0;
+            out.m02 = 0;
+            out.m03 = 0;
+            out.m04 = 0;
+            out.m05 = v.y;
+            out.m06 = 0;
+            out.m07 = 0;
+            out.m08 = 0;
+            out.m09 = 0;
+            out.m10 = v.z;
+            out.m11 = 0;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = 0;
+            out.m15 = 1;
+        }
         return out;
     }
 
@@ -596,39 +618,41 @@ export class Mat4 extends ValueType {
      * @zh 计算旋转矩阵
      */
     public static fromRotation <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, rad: number, axis: VecLike) {
-        let x = axis.x; let y = axis.y; let z = axis.z;
-        let len = Math.sqrt(x * x + y * y + z * z);
+        if (EDITOR) {
+            let x = axis.x; let y = axis.y; let z = axis.z;
+            let len = Math.sqrt(x * x + y * y + z * z);
 
-        if (Math.abs(len) < EPSILON) {
-            return null;
+            if (Math.abs(len) < EPSILON) {
+                return null;
+            }
+
+            len = 1 / len;
+            x *= len;
+            y *= len;
+            z *= len;
+
+            const s = Math.sin(rad);
+            const c = Math.cos(rad);
+            const t = 1 - c;
+
+            // Perform rotation-specific matrix multiplication
+            out.m00 = x * x * t + c;
+            out.m01 = y * x * t + z * s;
+            out.m02 = z * x * t - y * s;
+            out.m03 = 0;
+            out.m04 = x * y * t - z * s;
+            out.m05 = y * y * t + c;
+            out.m06 = z * y * t + x * s;
+            out.m07 = 0;
+            out.m08 = x * z * t + y * s;
+            out.m09 = y * z * t - x * s;
+            out.m10 = z * z * t + c;
+            out.m11 = 0;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = 0;
+            out.m15 = 1;
         }
-
-        len = 1 / len;
-        x *= len;
-        y *= len;
-        z *= len;
-
-        const s = Math.sin(rad);
-        const c = Math.cos(rad);
-        const t = 1 - c;
-
-        // Perform rotation-specific matrix multiplication
-        out.m00 = x * x * t + c;
-        out.m01 = y * x * t + z * s;
-        out.m02 = z * x * t - y * s;
-        out.m03 = 0;
-        out.m04 = x * y * t - z * s;
-        out.m05 = y * y * t + c;
-        out.m06 = z * y * t + x * s;
-        out.m07 = 0;
-        out.m08 = x * z * t + y * s;
-        out.m09 = y * z * t - x * s;
-        out.m10 = z * z * t + c;
-        out.m11 = 0;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = 0;
-        out.m15 = 1;
         return out;
     }
 
@@ -637,52 +661,56 @@ export class Mat4 extends ValueType {
      * @zh 计算绕 X 轴的旋转矩阵
      */
     public static fromXRotation <Out extends IMat4Like> (out: Out, rad: number) {
-        const s = Math.sin(rad); const c = Math.cos(rad);
+        if (EDITOR) {
+            const s = Math.sin(rad); const c = Math.cos(rad);
 
-        // Perform axis-specific matrix multiplication
-        out.m00 = 1;
-        out.m01 = 0;
-        out.m02 = 0;
-        out.m03 = 0;
-        out.m04 = 0;
-        out.m05 = c;
-        out.m06 = s;
-        out.m07 = 0;
-        out.m08 = 0;
-        out.m09 = -s;
-        out.m10 = c;
-        out.m11 = 0;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = 0;
-        out.m15 = 1;
+            // Perform axis-specific matrix multiplication
+            out.m00 = 1;
+            out.m01 = 0;
+            out.m02 = 0;
+            out.m03 = 0;
+            out.m04 = 0;
+            out.m05 = c;
+            out.m06 = s;
+            out.m07 = 0;
+            out.m08 = 0;
+            out.m09 = -s;
+            out.m10 = c;
+            out.m11 = 0;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = 0;
+            out.m15 = 1;
+        }
         return out;
     }
 
     /**
      * @en Calculates the matrix representing a rotation around the Y axis
      * @zh 计算绕 Y 轴的旋转矩阵
-     */
+         */
     public static fromYRotation <Out extends IMat4Like> (out: Out, rad: number) {
-        const s = Math.sin(rad); const c = Math.cos(rad);
+        if (EDITOR) {
+            const s = Math.sin(rad); const c = Math.cos(rad);
 
-        // Perform axis-specific matrix multiplication
-        out.m00 = c;
-        out.m01 = 0;
-        out.m02 = -s;
-        out.m03 = 0;
-        out.m04 = 0;
-        out.m05 = 1;
-        out.m06 = 0;
-        out.m07 = 0;
-        out.m08 = s;
-        out.m09 = 0;
-        out.m10 = c;
-        out.m11 = 0;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = 0;
-        out.m15 = 1;
+            // Perform axis-specific matrix multiplication
+            out.m00 = c;
+            out.m01 = 0;
+            out.m02 = -s;
+            out.m03 = 0;
+            out.m04 = 0;
+            out.m05 = 1;
+            out.m06 = 0;
+            out.m07 = 0;
+            out.m08 = s;
+            out.m09 = 0;
+            out.m10 = c;
+            out.m11 = 0;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = 0;
+            out.m15 = 1;
+        }
         return out;
     }
 
@@ -691,25 +719,27 @@ export class Mat4 extends ValueType {
      * @zh 计算绕 Z 轴的旋转矩阵
      */
     public static fromZRotation <Out extends IMat4Like> (out: Out, rad: number) {
-        const s = Math.sin(rad); const c = Math.cos(rad);
+        if (EDITOR) {
+            const s = Math.sin(rad); const c = Math.cos(rad);
 
-        // Perform axis-specific matrix multiplication
-        out.m00 = c;
-        out.m01 = s;
-        out.m02 = 0;
-        out.m03 = 0;
-        out.m04 = -s;
-        out.m05 = c;
-        out.m06 = 0;
-        out.m07 = 0;
-        out.m08 = 0;
-        out.m09 = 0;
-        out.m10 = 1;
-        out.m11 = 0;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = 0;
-        out.m15 = 1;
+            // Perform axis-specific matrix multiplication
+            out.m00 = c;
+            out.m01 = s;
+            out.m02 = 0;
+            out.m03 = 0;
+            out.m04 = -s;
+            out.m05 = c;
+            out.m06 = 0;
+            out.m07 = 0;
+            out.m08 = 0;
+            out.m09 = 0;
+            out.m10 = 1;
+            out.m11 = 0;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = 0;
+            out.m15 = 1;
+        }
         return out;
     }
 
@@ -718,37 +748,39 @@ export class Mat4 extends ValueType {
      * @zh 根据旋转和位移信息计算矩阵
      */
     public static fromRT <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, q: Quat, v: VecLike) {
-        const x = q.x; const y = q.y; const z = q.z; const w = q.w;
-        const x2 = x + x;
-        const y2 = y + y;
-        const z2 = z + z;
+        if (EDITOR) {
+            const x = q.x; const y = q.y; const z = q.z; const w = q.w;
+            const x2 = x + x;
+            const y2 = y + y;
+            const z2 = z + z;
 
-        const xx = x * x2;
-        const xy = x * y2;
-        const xz = x * z2;
-        const yy = y * y2;
-        const yz = y * z2;
-        const zz = z * z2;
-        const wx = w * x2;
-        const wy = w * y2;
-        const wz = w * z2;
+            const xx = x * x2;
+            const xy = x * y2;
+            const xz = x * z2;
+            const yy = y * y2;
+            const yz = y * z2;
+            const zz = z * z2;
+            const wx = w * x2;
+            const wy = w * y2;
+            const wz = w * z2;
 
-        out.m00 = 1 - (yy + zz);
-        out.m01 = xy + wz;
-        out.m02 = xz - wy;
-        out.m03 = 0;
-        out.m04 = xy - wz;
-        out.m05 = 1 - (xx + zz);
-        out.m06 = yz + wx;
-        out.m07 = 0;
-        out.m08 = xz + wy;
-        out.m09 = yz - wx;
-        out.m10 = 1 - (xx + yy);
-        out.m11 = 0;
-        out.m12 = v.x;
-        out.m13 = v.y;
-        out.m14 = v.z;
-        out.m15 = 1;
+            out.m00 = 1 - (yy + zz);
+            out.m01 = xy + wz;
+            out.m02 = xz - wy;
+            out.m03 = 0;
+            out.m04 = xy - wz;
+            out.m05 = 1 - (xx + zz);
+            out.m06 = yz + wx;
+            out.m07 = 0;
+            out.m08 = xz + wy;
+            out.m09 = yz - wx;
+            out.m10 = 1 - (xx + yy);
+            out.m11 = 0;
+            out.m12 = v.x;
+            out.m13 = v.y;
+            out.m14 = v.z;
+            out.m15 = 1;
+        }
 
         return out;
     }
@@ -770,20 +802,22 @@ export class Mat4 extends ValueType {
      * @zh 提取矩阵的缩放信息, 默认矩阵中的变换以 S->R->T 的顺序应用
      */
     public static getScaling <InType extends IMat4Like, VecLike extends IVec3Like> (out: VecLike, mat: InType) {
-        const m00 = m3_1.m00 = mat.m00;
-        const m01 = m3_1.m01 = mat.m01;
-        const m02 = m3_1.m02 = mat.m02;
-        const m04 = m3_1.m03 = mat.m04;
-        const m05 = m3_1.m04 = mat.m05;
-        const m06 = m3_1.m05 = mat.m06;
-        const m08 = m3_1.m06 = mat.m08;
-        const m09 = m3_1.m07 = mat.m09;
-        const m10 = m3_1.m08 = mat.m10;
-        out.x = Math.sqrt(m00 * m00 + m01 * m01 + m02 * m02);
-        out.y = Math.sqrt(m04 * m04 + m05 * m05 + m06 * m06);
-        out.z = Math.sqrt(m08 * m08 + m09 * m09 + m10 * m10);
-        // account for refections
-        if (Mat3.determinant(m3_1) < 0) { out.x *= -1; }
+        if (EDITOR) {
+            const m00 = m3_1.m00 = mat.m00;
+            const m01 = m3_1.m01 = mat.m01;
+            const m02 = m3_1.m02 = mat.m02;
+            const m04 = m3_1.m03 = mat.m04;
+            const m05 = m3_1.m04 = mat.m05;
+            const m06 = m3_1.m05 = mat.m06;
+            const m08 = m3_1.m06 = mat.m08;
+            const m09 = m3_1.m07 = mat.m09;
+            const m10 = m3_1.m08 = mat.m10;
+            out.x = Math.sqrt(m00 * m00 + m01 * m01 + m02 * m02);
+            out.y = Math.sqrt(m04 * m04 + m05 * m05 + m06 * m06);
+            out.z = Math.sqrt(m08 * m08 + m09 * m09 + m10 * m10);
+            // account for refections
+            if (Mat3.determinant(m3_1) < 0) { out.x *= -1; }
+        }
         return out;
     }
 
@@ -829,22 +863,24 @@ export class Mat4 extends ValueType {
      * @zh 提取旋转、位移、缩放信息， 默认矩阵中的变换以 S->R->T 的顺序应用
      */
     public static toRTS <InType extends IMat4Like, VecLike extends IVec3Like> (m: InType, q: Quat, v: VecLike, s: VecLike) {
-        s.x = Vec3.set(v3_1, m.m00, m.m01, m.m02).length();
-        m3_1.m00 = m.m00 / s.x;
-        m3_1.m01 = m.m01 / s.x;
-        m3_1.m02 = m.m02 / s.x;
-        s.y = Vec3.set(v3_1, m.m04, m.m05, m.m06).length();
-        m3_1.m03 = m.m04 / s.y;
-        m3_1.m04 = m.m05 / s.y;
-        m3_1.m05 = m.m06 / s.y;
-        s.z = Vec3.set(v3_1, m.m08, m.m09, m.m10).length();
-        m3_1.m06 = m.m08 / s.z;
-        m3_1.m07 = m.m09 / s.z;
-        m3_1.m08 = m.m10 / s.z;
-        const det = Mat3.determinant(m3_1);
-        if (det < 0) { s.x *= -1; m3_1.m00 *= -1; m3_1.m01 *= -1; m3_1.m02 *= -1; }
-        Quat.fromMat3(q, m3_1); // already normalized
-        Vec3.set(v, m.m12, m.m13, m.m14);
+        if (EDITOR) {
+            s.x = Vec3.set(v3_1, m.m00, m.m01, m.m02).length();
+            m3_1.m00 = m.m00 / s.x;
+            m3_1.m01 = m.m01 / s.x;
+            m3_1.m02 = m.m02 / s.x;
+            s.y = Vec3.set(v3_1, m.m04, m.m05, m.m06).length();
+            m3_1.m03 = m.m04 / s.y;
+            m3_1.m04 = m.m05 / s.y;
+            m3_1.m05 = m.m06 / s.y;
+            s.z = Vec3.set(v3_1, m.m08, m.m09, m.m10).length();
+            m3_1.m06 = m.m08 / s.z;
+            m3_1.m07 = m.m09 / s.z;
+            m3_1.m08 = m.m10 / s.z;
+            const det = Mat3.determinant(m3_1);
+            if (det < 0) { s.x *= -1; m3_1.m00 *= -1; m3_1.m01 *= -1; m3_1.m02 *= -1; }
+            Quat.fromMat3(q, m3_1); // already normalized
+            Vec3.set(v, m.m12, m.m13, m.m14);
+        }
     }
 
     /**
@@ -899,46 +935,47 @@ export class Mat4 extends ValueType {
      * @param o transformation Center
      */
     public static fromRTSOrigin <Out extends IMat4Like, VecLike extends IVec3Like> (out: Out, q: Quat, v: VecLike, s: VecLike, o: VecLike) {
-        const x = q.x; const y = q.y; const z = q.z; const w = q.w;
-        const x2 = x + x;
-        const y2 = y + y;
-        const z2 = z + z;
+        if (EDITOR) {
+            const x = q.x; const y = q.y; const z = q.z; const w = q.w;
+            const x2 = x + x;
+            const y2 = y + y;
+            const z2 = z + z;
 
-        const xx = x * x2;
-        const xy = x * y2;
-        const xz = x * z2;
-        const yy = y * y2;
-        const yz = y * z2;
-        const zz = z * z2;
-        const wx = w * x2;
-        const wy = w * y2;
-        const wz = w * z2;
+            const xx = x * x2;
+            const xy = x * y2;
+            const xz = x * z2;
+            const yy = y * y2;
+            const yz = y * z2;
+            const zz = z * z2;
+            const wx = w * x2;
+            const wy = w * y2;
+            const wz = w * z2;
 
-        const sx = s.x;
-        const sy = s.y;
-        const sz = s.z;
+            const sx = s.x;
+            const sy = s.y;
+            const sz = s.z;
 
-        const ox = o.x;
-        const oy = o.y;
-        const oz = o.z;
+            const ox = o.x;
+            const oy = o.y;
+            const oz = o.z;
 
-        out.m00 = (1 - (yy + zz)) * sx;
-        out.m01 = (xy + wz) * sx;
-        out.m02 = (xz - wy) * sx;
-        out.m03 = 0;
-        out.m04 = (xy - wz) * sy;
-        out.m05 = (1 - (xx + zz)) * sy;
-        out.m06 = (yz + wx) * sy;
-        out.m07 = 0;
-        out.m08 = (xz + wy) * sz;
-        out.m09 = (yz - wx) * sz;
-        out.m10 = (1 - (xx + yy)) * sz;
-        out.m11 = 0;
-        out.m12 = v.x + ox - (out.m00 * ox + out.m04 * oy + out.m08 * oz);
-        out.m13 = v.y + oy - (out.m01 * ox + out.m05 * oy + out.m09 * oz);
-        out.m14 = v.z + oz - (out.m02 * ox + out.m06 * oy + out.m10 * oz);
-        out.m15 = 1;
-
+            out.m00 = (1 - (yy + zz)) * sx;
+            out.m01 = (xy + wz) * sx;
+            out.m02 = (xz - wy) * sx;
+            out.m03 = 0;
+            out.m04 = (xy - wz) * sy;
+            out.m05 = (1 - (xx + zz)) * sy;
+            out.m06 = (yz + wx) * sy;
+            out.m07 = 0;
+            out.m08 = (xz + wy) * sz;
+            out.m09 = (yz - wx) * sz;
+            out.m10 = (1 - (xx + yy)) * sz;
+            out.m11 = 0;
+            out.m12 = v.x + ox - (out.m00 * ox + out.m04 * oy + out.m08 * oz);
+            out.m13 = v.y + oy - (out.m01 * ox + out.m05 * oy + out.m09 * oz);
+            out.m14 = v.z + oz - (out.m02 * ox + out.m06 * oy + out.m10 * oz);
+            out.m15 = 1;
+        }
         return out;
     }
 
@@ -996,26 +1033,28 @@ export class Mat4 extends ValueType {
      * @param far Z distance to the far plane from the origin in view space.
      */
     public static frustum <Out extends IMat4Like> (out: Out, left: number, right: number, bottom: number, top: number, near: number, far: number) {
-        const rl = 1 / (right - left);
-        const tb = 1 / (top - bottom);
-        const nf = 1 / (near - far);
+        if (EDITOR) {
+            const rl = 1 / (right - left);
+            const tb = 1 / (top - bottom);
+            const nf = 1 / (near - far);
 
-        out.m00 = (near * 2) * rl;
-        out.m01 = 0;
-        out.m02 = 0;
-        out.m03 = 0;
-        out.m04 = 0;
-        out.m05 = (near * 2) * tb;
-        out.m06 = 0;
-        out.m07 = 0;
-        out.m08 = (right + left) * rl;
-        out.m09 = (top + bottom) * tb;
-        out.m10 = (far + near) * nf;
-        out.m11 = -1;
-        out.m12 = 0;
-        out.m13 = 0;
-        out.m14 = (far * near * 2) * nf;
-        out.m15 = 0;
+            out.m00 = (near * 2) * rl;
+            out.m01 = 0;
+            out.m02 = 0;
+            out.m03 = 0;
+            out.m04 = 0;
+            out.m05 = (near * 2) * tb;
+            out.m06 = 0;
+            out.m07 = 0;
+            out.m08 = (right + left) * rl;
+            out.m09 = (top + bottom) * tb;
+            out.m10 = (far + near) * nf;
+            out.m11 = -1;
+            out.m12 = 0;
+            out.m13 = 0;
+            out.m14 = (far * near * 2) * nf;
+            out.m15 = 0;
+        }
         return out;
     }
 

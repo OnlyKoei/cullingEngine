@@ -83,25 +83,25 @@ export class SpotLight extends Light {
     @tooltip('i18n:lights.luminous_flux')
     @displayOrder(-1)
     get luminousFlux () {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        if (isHDR) {
-            return this._luminanceHDR * scene.nt2lm(this._size);
-        } else {
-            return this._luminanceLDR;
-        }
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // if (isHDR) {
+        //     return this._luminanceHDR * scene.nt2lm(this._size);
+        // } else {
+        return this._luminanceLDR;
+        // }
     }
 
     set luminousFlux (val) {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        let result = 0;
-        if (isHDR) {
-            this._luminanceHDR = val / scene.nt2lm(this._size);
-            result = this._luminanceHDR;
-        } else {
-            this._luminanceLDR = val;
-            result = this._luminanceLDR;
-        }
-        this._light && (this._light.luminance = result);
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // let result = 0;
+        // if (isHDR) {
+        //     this._luminanceHDR = val / scene.nt2lm(this._size);
+        //     result = this._luminanceHDR;
+        // } else {
+        //     this._luminanceLDR = val;
+        //     result = this._luminanceLDR;
+        // }
+        // this._light && (this._light.luminance = result);
     }
 
     /**
@@ -120,14 +120,14 @@ export class SpotLight extends Light {
     }
 
     set luminance (val) {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        if (isHDR) {
-            this._luminanceHDR = val;
-            this._light && (this._light.luminanceHDR = this._luminanceHDR);
-        } else {
-            this._luminanceLDR = val;
-            this._light && (this._light.luminanceLDR = this._luminanceLDR);
-        }
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // if (isHDR) {
+        //     this._luminanceHDR = val;
+        //     this._light && (this._light.luminanceHDR = this._luminanceHDR);
+        // } else {
+        //     this._luminanceLDR = val;
+        //     this._light && (this._light.luminanceLDR = this._luminanceLDR);
+        // }
     }
 
     /**
@@ -142,7 +142,7 @@ export class SpotLight extends Light {
     }
 
     set term (val) {
-        this._term = val;
+        // this._term = val;
     }
 
     /**
@@ -157,8 +157,8 @@ export class SpotLight extends Light {
     }
 
     set size (val) {
-        this._size = val;
-        if (this._light) { this._light.size = val; }
+        // this._size = val;
+        // if (this._light) { this._light.size = val; }
     }
 
     /**
@@ -173,8 +173,8 @@ export class SpotLight extends Light {
     }
 
     set range (val) {
-        this._range = val;
-        if (this._light) { this._light.range = val; }
+        // this._range = val;
+        // if (this._light) { this._light.range = val; }
     }
 
     /**
@@ -191,8 +191,8 @@ export class SpotLight extends Light {
     }
 
     set spotAngle (val) {
-        this._spotAngle = val;
-        if (this._light) { this._light.spotAngle = toRadian(val); }
+        // this._spotAngle = val;
+        // if (this._light) { this._light.spotAngle = toRadian(val); }
     }
 
     /**
@@ -207,10 +207,10 @@ export class SpotLight extends Light {
         return this._shadowEnabled;
     }
     set shadowEnabled (val) {
-        this._shadowEnabled = val;
-        if (this._light) {
-            this._light.shadowEnabled = val;
-        }
+        // this._shadowEnabled = val;
+        // if (this._light) {
+        //     this._light.shadowEnabled = val;
+        // }
     }
 
     /**
@@ -225,10 +225,10 @@ export class SpotLight extends Light {
         return this._shadowPcf;
     }
     set shadowPcf (val) {
-        this._shadowPcf = val;
-        if (this._light) {
-            this._light.shadowPcf = val;
-        }
+        // this._shadowPcf = val;
+        // if (this._light) {
+        //     this._light.shadowPcf = val;
+        // }
     }
 
     /**
@@ -243,10 +243,10 @@ export class SpotLight extends Light {
         return this._shadowBias;
     }
     set shadowBias (val) {
-        this._shadowBias = val;
-        if (this._light) {
-            this._light.shadowBias = val;
-        }
+        // this._shadowBias = val;
+        // if (this._light) {
+        //     this._light.shadowBias = val;
+        // }
     }
 
     /**
@@ -261,10 +261,10 @@ export class SpotLight extends Light {
         return this._shadowNormalBias;
     }
     set shadowNormalBias (val) {
-        this._shadowNormalBias = val;
-        if (this._light) {
-            this._light.shadowNormalBias = val;
-        }
+        // this._shadowNormalBias = val;
+        // if (this._light) {
+        //     this._light.shadowNormalBias = val;
+        // }
     }
 
     constructor () {
@@ -273,19 +273,19 @@ export class SpotLight extends Light {
     }
 
     protected _createLight () {
-        super._createLight();
-        this.size = this._size;
-        this.range = this._range;
-        this.spotAngle = this._spotAngle;
+        // super._createLight();
+        // this.size = this._size;
+        // this.range = this._range;
+        // this.spotAngle = this._spotAngle;
 
-        if (this._light) {
-            this._light.luminanceHDR = this._luminanceHDR;
-            this._light.luminanceLDR = this._luminanceLDR;
-            // shadow info
-            this._light.shadowEnabled = this._shadowEnabled;
-            this._light.shadowPcf = this._shadowPcf;
-            this._light.shadowBias = this._shadowBias;
-            this._light.shadowNormalBias = this._shadowNormalBias;
-        }
+        // if (this._light) {
+        //     this._light.luminanceHDR = this._luminanceHDR;
+        //     this._light.luminanceLDR = this._luminanceLDR;
+        //     // shadow info
+        //     this._light.shadowEnabled = this._shadowEnabled;
+        //     this._light.shadowPcf = this._shadowPcf;
+        //     this._light.shadowBias = this._shadowBias;
+        //     this._light.shadowNormalBias = this._shadowNormalBias;
+        // }
     }
 }

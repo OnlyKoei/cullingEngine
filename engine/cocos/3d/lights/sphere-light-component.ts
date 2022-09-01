@@ -61,24 +61,24 @@ export class SphereLight extends Light {
     @displayOrder(-1)
     @tooltip('i18n:lights.luminous_flux')
     get luminousFlux () {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        if (isHDR) {
-            return this._luminanceHDR * scene.nt2lm(this._size);
-        } else {
-            return this._luminanceLDR;
-        }
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // if (isHDR) {
+        //     return this._luminanceHDR * scene.nt2lm(this._size);
+        // } else {
+        return this._luminanceLDR;
+        // }
     }
     set luminousFlux (val) {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        let result = 0;
-        if (isHDR) {
-            this._luminanceHDR = val / scene.nt2lm(this._size);
-            result = this._luminanceHDR;
-        } else {
-            this._luminanceLDR = val;
-            result = this._luminanceLDR;
-        }
-        this._light && (this._light.luminance = result);
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // let result = 0;
+        // if (isHDR) {
+        //     this._luminanceHDR = val / scene.nt2lm(this._size);
+        //     result = this._luminanceHDR;
+        // } else {
+        //     this._luminanceLDR = val;
+        //     result = this._luminanceLDR;
+        // }
+        // this._light && (this._light.luminance = result);
     }
 
     /**
@@ -88,22 +88,22 @@ export class SphereLight extends Light {
     @displayOrder(-1)
     @tooltip('i18n:lights.luminance')
     get luminance () {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        if (isHDR) {
-            return this._luminanceHDR;
-        } else {
-            return this._luminanceLDR;
-        }
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // if (isHDR) {
+        //     return this._luminanceHDR;
+        // } else {
+        return this._luminanceLDR;
+        // }
     }
     set luminance (val) {
-        const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
-        if (isHDR) {
-            this._luminanceHDR = val;
-            this._light && (this._light.luminanceHDR = this._luminanceHDR);
-        } else {
-            this._luminanceLDR = val;
-            this._light && (this._light.luminanceLDR = this._luminanceLDR);
-        }
+        // const isHDR = (legacyCC.director.root as Root).pipeline.pipelineSceneData.isHDR;
+        // if (isHDR) {
+        //     this._luminanceHDR = val;
+        //     this._light && (this._light.luminanceHDR = this._luminanceHDR);
+        // } else {
+        //     this._luminanceLDR = val;
+        //     this._light && (this._light.luminanceLDR = this._luminanceLDR);
+        // }
     }
 
     /**
@@ -117,7 +117,7 @@ export class SphereLight extends Light {
         return this._term;
     }
     set term (val) {
-        this._term = val;
+        // this._term = val;
     }
 
     /**
@@ -131,8 +131,8 @@ export class SphereLight extends Light {
         return this._size;
     }
     set size (val) {
-        this._size = val;
-        if (this._light) { this._light.size = val; }
+        // this._size = val;
+        // if (this._light) { this._light.size = val; }
     }
 
     /**
@@ -146,8 +146,8 @@ export class SphereLight extends Light {
         return this._range;
     }
     set range (val) {
-        this._range = val;
-        if (this._light) { this._light.range = val; }
+        // this._range = val;
+        // if (this._light) { this._light.range = val; }
     }
 
     constructor () {
@@ -156,13 +156,13 @@ export class SphereLight extends Light {
     }
 
     protected _createLight () {
-        super._createLight();
-        this.size = this._size;
-        this.range = this._range;
+        // super._createLight();
+        // this.size = this._size;
+        // this.range = this._range;
 
-        if (this._light) {
-            this._light.luminanceHDR = this._luminanceHDR;
-            this._light.luminanceLDR = this._luminanceLDR;
-        }
+        // if (this._light) {
+        //     this._light.luminanceHDR = this._luminanceHDR;
+        //     this._light.luminanceLDR = this._luminanceLDR;
+        // }
     }
 }
